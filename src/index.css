@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * WHOLNEX design tokens.
+ * Dark navy foundations with electric blue and cyan accents. `--primary` is used for filled
+ * controls (white text on top). `--brand` and `--cyan` are text-safe accent colors chosen to
+ * meet WCAG AA contrast on each theme's background.
+ */
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 214 32% 94%;
+    --secondary-foreground: 222 47% 14%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 19% 35%;
+
+    --accent: 214 95% 93%;
+    --accent-foreground: 224 76% 36%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 32% 89%;
+    --input: 214 32% 85%;
+    --ring: 221 83% 53%;
+
+    --brand: 224 76% 48%;
+    --cyan: 192 91% 28%;
+    --success: 152 69% 31%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222 59% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 219 50% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 219 50% 12%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 43% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 40% 14%;
+    --muted-foreground: 215 20% 70%;
+
+    --accent: 221 45% 19%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 50%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 219 35% 20%;
+    --input: 219 32% 24%;
+    --ring: 213 94% 68%;
+
+    --brand: 213 94% 68%;
+    --cyan: 188 94% 43%;
+    --success: 152 60% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1, 'cv11' 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-foreground;
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer components {
+  /* Thin technical grid used behind hero and feature sections. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--foreground) / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--foreground) / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.08) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 40%, transparent);
+  }
+
+  .mask-radial {
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+
+  /* Gradient hairline border for premium cards. */
+  .ring-gradient {
+    position: relative;
+  }
+
+  .ring-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(var(--brand) / 0.7), hsl(var(--cyan) / 0.5) 45%, transparent 75%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(100deg, #60a5fa 10%, #22d3ee 60%, #a5f3fc);
+  }
+
+  .prose-legal h2 {
+    @apply mt-10 font-display text-xl font-semibold text-foreground;
+  }
+
+  .prose-legal h3 {
+    @apply mt-6 font-display text-base font-semibold text-foreground;
+  }
+
+  .prose-legal p,
+  .prose-legal li {
+    @apply leading-relaxed text-muted-foreground;
+  }
+
+  .prose-legal p {
+    @apply mt-3;
+  }
+
+  .prose-legal ul {
+    @apply mt-3 list-disc space-y-1.5 pl-5;
+  }
+
+  .prose-legal a {
+    @apply font-medium text-brand underline underline-offset-4;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}

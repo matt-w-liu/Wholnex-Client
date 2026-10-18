@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#080F1F" />
+    <title>WHOLNEX LLC | VPS Hosting &amp; Virtual Private Servers</title>
+    <meta
+      name="description"
+      content="WHOLNEX LLC provides virtual private server (VPS) hosting for websites, applications, development environments, and growing digital projects. Request a VPS configuration quote."
+    />
+    <link rel="canonical" href="https://wholnex.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="WHOLNEX LLC" />
+    <meta property="og:title" content="WHOLNEX LLC | VPS Hosting &amp; Virtual Private Servers" />
+    <meta
+      property="og:description"
+      content="Virtual private server hosting for websites, applications, development environments, and growing digital projects."
+    />
+    <meta property="og:url" content="https://wholnex.org/" />
+    <meta property="og:image" content="https://wholnex.org/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Apply the saved theme before first paint to avoid a light/dark flash. Dark is the brand default. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('wholnex-theme');
+          var dark =
+            stored === 'light'
+              ? false
+              : stored === 'system'
+                ? window.matchMedia('(prefers-color-scheme: dark)').matches
+                : true;
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/site/server-drive-bays-1920.webp" type="image/webp" media="(min-width: 768px)" />
+    <link rel="preload" as="image" href="/images/site/server-drive-bays-960.webp" type="image/webp" media="(max-width: 767px)" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding: 24px; font-family: system-ui, sans-serif">
+        WHOLNEX LLC — VPS hosting and cloud infrastructure. This website requires JavaScript. Business
+        address: 1333 County Road 565, Van Buren, MO 63965, United States of America. Email:
+        support@wholnex.org.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
