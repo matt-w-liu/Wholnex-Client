@@ -1,6 +1,6 @@
 # @wholnex/client
 
-React SPA for the WHOLNEX LLC website (`https://wholnex.org`) — VPS hosting marketing pages, the VPS
+React SPA for the WHOLNEX LLC website (`https://wholnex.net`) — VPS hosting marketing pages, the VPS
 quote configurator, contact form, customer accounts, and the admin console.
 
 ## Prerequisites
@@ -73,9 +73,9 @@ docker build -t wholnex-client .
 
 See [`.env.example`](.env.example):
 
-- `VITE_API_URL` — e.g. `https://wholnex.org/api/v1`
-- `VITE_SITE_URL` — e.g. `https://wholnex.org`
-- `VITE_PUBLIC_CONTACT_EMAIL` — optional override; defaults to `support@wholnex.org`
+- `VITE_API_URL` — e.g. `https://wholnex.net/api/v1`
+- `VITE_SITE_URL` — e.g. `https://wholnex.net`
+- `VITE_PUBLIC_CONTACT_EMAIL` — optional override; defaults to `support@wholnex.net`
 - `VITE_SHOW_DRAFT_PLAN_DATA` — development only; previews draft plan data (ignored in production)
 
 ## Logo

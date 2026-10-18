@@ -10,7 +10,7 @@ export const COMPANY = {
   name: 'WHOLNEX LLC',
   brand: 'WHOLNEX',
   descriptor: 'Virtual Private Server Hosting & Cloud Infrastructure',
-  url: 'https://wholnex.org',
+  url: 'https://wholnex.net',
   ceo: {
     name: 'Ravindra Kuvar',
     title: 'Chief Executive Officer',
@@ -27,7 +27,7 @@ export const COMPANY = {
   language: 'en-US',
   currency: 'USD',
   /** Confirmed WHOLNEX support mailbox. VITE_PUBLIC_CONTACT_EMAIL can override it per build. */
-  publicEmail: (import.meta.env.VITE_PUBLIC_CONTACT_EMAIL as string | undefined)?.trim() || 'support@wholnex.org',
+  publicEmail: (import.meta.env.VITE_PUBLIC_CONTACT_EMAIL as string | undefined)?.trim() || 'support@wholnex.net',
 } as const;
 
 export const COMPANY_ADDRESS_LINES = [

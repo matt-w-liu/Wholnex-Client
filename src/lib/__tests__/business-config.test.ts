@@ -11,9 +11,9 @@ afterEach(() => {
 describe('company configuration', () => {
   it('uses the confirmed WHOLNEX facts', () => {
     expect(COMPANY.name).toBe('WHOLNEX LLC');
-    expect(COMPANY.url).toBe('https://wholnex.org');
+    expect(COMPANY.url).toBe('https://wholnex.net');
     expect(COMPANY.ceo).toEqual({ name: 'Ravindra Kuvar', title: 'Chief Executive Officer' });
-    expect(COMPANY.publicEmail).toBe('support@wholnex.org');
+    expect(COMPANY.publicEmail).toBe('support@wholnex.net');
     expect(COMPANY_ADDRESS_LINES).toEqual([
       '1333 COUNTY ROAD 565',
       'VAN BUREN, MO 63965',

@@ -7,4 +7,4 @@ Disallow: /register
 Disallow: /forgot-password
 Disallow: /reset-password
 
-Sitemap: https://wholnex.org/sitemap.xml
+Sitemap: https://wholnex.net/sitemap.xml
