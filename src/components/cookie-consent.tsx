@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
+import { COOKIE_BANNER_ID } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
@@ -20,6 +21,7 @@ export function CookieConsentBanner() {
 
   return (
     <div
+      id={COOKIE_BANNER_ID}
       role="region"
       aria-label="Cookie consent"
       className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 p-4 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/90"
@@ -35,7 +37,7 @@ export function CookieConsentBanner() {
         </p>
         <div className="flex shrink-0 flex-wrap gap-2">
           <Button variant="outline" size="sm" onClick={openSettings}>
-            Customise
+            Customize
           </Button>
           <Button variant="outline" size="sm" onClick={rejectNonEssential}>
             Reject non-essential

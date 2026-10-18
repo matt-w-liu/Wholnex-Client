@@ -111,3 +111,6 @@ export const FOOTER_LINKS: { title: string; links: NavLink[] }[] = [
     ],
   },
 ];
+
+/** DOM id of the cookie banner, used by floating UI (back-to-top button) to stay clear of it. */
+export const COOKIE_BANNER_ID = 'cookie-consent-banner';
