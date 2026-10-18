@@ -57,7 +57,7 @@ export function LoginPage() {
 
   return (
     <>
-      <Seo title="Sign In" description="Sign in to your WHOLNEX account to view your quote requests and messages." path="/login" noIndex />
+      <Seo title="Sign In" description="Sign in to your WHOLNEX account to view your plan requests and messages." path="/login" noIndex />
       <div className="container-page flex min-h-[70vh] items-center justify-center py-16">
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-4">

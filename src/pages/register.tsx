@@ -53,7 +53,7 @@ export function RegisterPage() {
 
   return (
     <>
-      <Seo title="Create an Account" description="Create a WHOLNEX account to track your quote requests and messages." path="/register" noIndex />
+      <Seo title="Create an Account" description="Create a WHOLNEX account to track your plan requests and messages." path="/register" noIndex />
       <div className="container-page flex min-h-[70vh] items-center justify-center py-16">
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-4">
@@ -62,7 +62,7 @@ export function RegisterPage() {
             </Link>
             <div className="space-y-1.5 text-center">
               <h1 className="font-display text-2xl font-semibold leading-none">Create an account</h1>
-              <CardDescription>Create an account to track your VPS quote requests and messages in one place.</CardDescription>
+              <CardDescription>Create an account to track your VPN plan requests and messages in one place.</CardDescription>
             </div>
           </CardHeader>
           <CardContent>

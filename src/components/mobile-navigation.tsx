@@ -57,7 +57,7 @@ export function MobileNavigation() {
         </nav>
 
         <Button className="mt-6 w-full" asChild onClick={close}>
-          <Link to="/pricing">View VPS Plans</Link>
+          <Link to="/pricing">View VPN Plans</Link>
         </Button>
 
         <Separator className="my-5" />

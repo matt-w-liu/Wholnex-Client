@@ -15,7 +15,7 @@ interface CapabilityGridProps {
 /**
  * Renders infrastructure or security topics. A capability shows an "Included" badge only when
  * WHOLNEX has confirmed it in src/lib/capabilities.ts; otherwise it is presented as a topic to
- * confirm in the written quote.
+ * confirm with WHOLNEX.
  */
 export function CapabilityGrid({ capabilities, className, showNotice = true }: CapabilityGridProps) {
   const allUnconfirmed = confirmedCount(capabilities) === 0;
@@ -27,10 +27,10 @@ export function CapabilityGrid({ capabilities, className, showNotice = true }: C
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden="true" />
           <span>
             {allUnconfirmed
-              ? 'These are the capabilities to evaluate in any VPS service. Which of them are included with your WHOLNEX server is stated in writing in your quote.'
-              : 'Items marked “Included” are confirmed parts of the WHOLNEX service. Other items are confirmed per quote.'}{' '}
-            <Link to="/quote" className="font-medium text-brand underline-offset-4 hover:underline">
-              Request a configuration
+              ? 'These are the features to look for in any VPN. Each is marked Included here once WHOLNEX confirms it for its app and network.'
+              : 'Items marked “Included” are confirmed parts of the WHOLNEX service. Ask us about the others.'}{' '}
+            <Link to="/contact?category=sales" className="font-medium text-brand underline-offset-4 hover:underline">
+              Ask the WHOLNEX team
             </Link>
           </span>
         </p>

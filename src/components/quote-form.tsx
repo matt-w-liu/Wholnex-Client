@@ -3,27 +3,25 @@ import { Link } from 'react-router-dom';
 import { useForm, useWatch, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  MANAGEMENT_PREFERENCE_LABELS,
-  OPERATING_SYSTEM_PREFERENCE_LABELS,
+  DEVICE_PLATFORM_LABELS,
   QUOTE_PLAN_INTEREST_LABELS,
   QUOTE_TIMELINE_LABELS,
-  VPS_WORKLOAD_LABELS,
-  managementPreferences,
-  operatingSystemPreferences,
+  VPN_USE_CASE_LABELS,
+  devicePlatforms,
   quoteRequestSchema,
   quoteTimelines,
-  vpsWorkloads,
-  type ManagementPreference,
-  type OperatingSystemPreference,
+  vpnUseCases,
+  type DevicePlatform,
   type QuotePlanInterest,
   type QuoteRequestInput,
   type QuoteTimeline,
-  type VpsWorkload,
+  type VpnUseCase,
 } from '@wholnex/shared';
-import { CheckCircle2, Loader2, Send, ServerCog } from 'lucide-react';
+import { Check, CheckCircle2, Loader2, Send, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { apiPost, ApiError } from '@/lib/api';
-import { getPlanById, PLAN_STARTING_POINTS, VPS_PLANS } from '@/lib/vps-plans';
+import { getPlanById, PLAN_STARTING_USERS, VPN_PLANS } from '@/lib/vpn-plans';
+import { AVAILABLE_PLATFORMS } from '@/lib/platforms';
 import { ChoiceChips, type ChoiceOption } from '@/components/choice-chips';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,37 +29,22 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { cn } from '@/lib/utils';
 
 type QuoteFormValues = Omit<QuoteRequestInput, 'consent'> & { consent: boolean };
 
 export interface QuoteFormDefaults {
   planInterest?: QuotePlanInterest;
-  operatingSystem?: OperatingSystemPreference;
-  workload?: VpsWorkload;
+  useCase?: VpnUseCase;
 }
 
 const PLAN_OPTIONS: ChoiceOption<QuotePlanInterest>[] = [
-  ...VPS_PLANS.map((plan) => ({ value: plan.id, label: plan.name, description: plan.tagline })),
-  { value: 'custom', label: QUOTE_PLAN_INTEREST_LABELS.custom, description: 'Specify your own resources' },
-  { value: 'not-sure', label: QUOTE_PLAN_INTEREST_LABELS['not-sure'], description: 'Recommend a size for me' },
+  ...VPN_PLANS.map((plan) => ({ value: plan.id, label: plan.name, description: plan.tagline })),
+  { value: 'custom', label: QUOTE_PLAN_INTEREST_LABELS.custom, description: 'Describe what you need' },
+  { value: 'not-sure', label: QUOTE_PLAN_INTEREST_LABELS['not-sure'], description: 'Recommend a plan for me' },
 ];
 
-const NOT_SPECIFIED = 'unspecified';
-const VCPU_OPTIONS = [1, 2, 4, 6, 8, 12, 16, 24, 32];
-const MEMORY_OPTIONS = [1, 2, 4, 8, 16, 32, 64, 128];
-const STORAGE_OPTIONS = [25, 40, 80, 160, 320, 640, 1280];
-
-function numberChips(values: number[], unit: string): ChoiceOption<string>[] {
-  return [
-    ...values.map((v) => ({ value: String(v), label: `${v}${unit}` })),
-    { value: NOT_SPECIFIED, label: 'Not sure' },
-  ];
-}
-
-const OS_OPTIONS: ChoiceOption<OperatingSystemPreference>[] = operatingSystemPreferences.map((os) => ({
-  value: os,
-  label: OPERATING_SYSTEM_PREFERENCE_LABELS[os].replace(' (licensing to be discussed)', ''),
-}));
+const availableNames = AVAILABLE_PLATFORMS.map((platform) => platform.name).join(', ');
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
   return (
@@ -72,22 +55,52 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+/** Multi-select toggle chips (each is a button with aria-pressed). */
+function PlatformToggles({
+  value,
+  onChange,
+  labelledBy,
+}: {
+  value: DevicePlatform[];
+  onChange: (next: DevicePlatform[]) => void;
+  labelledBy: string;
+}) {
+  return (
+    <div role="group" aria-labelledby={labelledBy} className="flex flex-wrap gap-2">
+      {devicePlatforms.map((platform) => {
+        const selected = value.includes(platform);
+        return (
+          <button
+            key={platform}
+            type="button"
+            aria-pressed={selected}
+            onClick={() => onChange(selected ? value.filter((p) => p !== platform) : [...value, platform])}
+            className={cn(
+              'inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+              selected ? 'border-brand bg-brand/10 shadow-glow' : 'border-border bg-card hover:border-brand/50',
+            )}
+          >
+            {selected && <Check className="h-3.5 w-3.5 text-brand" aria-hidden="true" />}
+            {DEVICE_PLATFORM_LABELS[platform]}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
   const [submittedPlan, setSubmittedPlan] = useState<QuotePlanInterest | null>(null);
   const initialPlan = defaults?.planInterest ?? 'not-sure';
-  const initialResources = getPlanById(initialPlan) ? PLAN_STARTING_POINTS[initialPlan as keyof typeof PLAN_STARTING_POINTS] : undefined;
+  const initialPlanConfig = getPlanById(initialPlan);
 
   const form = useForm<QuoteFormValues>({
     resolver: zodResolver(quoteRequestSchema) as unknown as Resolver<QuoteFormValues>,
     defaultValues: {
       planInterest: initialPlan,
-      workload: defaults?.workload ?? 'websites',
-      operatingSystem: defaults?.operatingSystem ?? 'not-sure',
-      vcpu: initialResources?.vcpu,
-      memoryGb: initialResources?.memoryGb,
-      storageGb: initialResources?.storageGb,
-      quantity: 1,
-      managementPreference: 'not-sure',
+      useCase: defaults?.useCase ?? 'online-privacy',
+      platforms: ['windows'],
+      users: initialPlanConfig ? PLAN_STARTING_USERS[initialPlanConfig.id] : 1,
       regionPreference: '',
       timeline: undefined,
       requirements: '',
@@ -103,21 +116,15 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
 
   function selectPlan(plan: QuotePlanInterest) {
     form.setValue('planInterest', plan, { shouldValidate: true });
-    const preset = getPlanById(plan) ? PLAN_STARTING_POINTS[plan as keyof typeof PLAN_STARTING_POINTS] : undefined;
-    if (preset) {
-      form.setValue('vcpu', preset.vcpu);
-      form.setValue('memoryGb', preset.memoryGb);
-      form.setValue('storageGb', preset.storageGb);
-    }
+    const config = getPlanById(plan);
+    if (config) form.setValue('users', PLAN_STARTING_USERS[config.id]);
   }
 
   async function onSubmit(values: QuoteFormValues) {
     try {
       await apiPost('/quote-requests', values as unknown as QuoteRequestInput);
       setSubmittedPlan(values.planInterest);
-      toast.success('Configuration request sent', {
-        description: 'The WHOLNEX team will reply by email with a written quote.',
-      });
+      toast.success('Request sent', { description: 'The WHOLNEX team will reply by email.' });
     } catch (error) {
       if (error instanceof ApiError && error.errors) {
         for (const [field, messages] of Object.entries(error.errors)) {
@@ -136,22 +143,21 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
         <CheckCircle2 className="h-12 w-12 text-brand" aria-hidden="true" />
         <h2 className="font-display text-2xl font-semibold">Request received</h2>
         <p className="max-w-md text-muted-foreground">
-          Your {QUOTE_PLAN_INTEREST_LABELS[submittedPlan]} configuration request has been submitted. The WHOLNEX team
-          will review it and reply to your email with the specifications, pricing, and availability we can confirm.
-          This is not an order, and nothing has been charged.
+          Your {QUOTE_PLAN_INTEREST_LABELS[submittedPlan]} request has been submitted. The WHOLNEX team will reply to your
+          email with the plan details and pricing we can confirm. This is not an order, and nothing has been charged.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
+          <Button variant="outline" asChild>
+            <Link to="/download">Download the app</Link>
+          </Button>
           <Button
-            variant="outline"
+            variant="ghost"
             onClick={() => {
               form.reset();
               setSubmittedPlan(null);
             }}
           >
-            Configure another server
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link to="/faq">Read the FAQ</Link>
+            Send another request
           </Button>
         </div>
       </div>
@@ -159,29 +165,21 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
   }
 
   const isSubmitting = form.formState.isSubmitting;
-  const resourceSummary = (value: number | undefined, unit: string) => (value ? `${value}${unit}` : 'Recommend for me');
+  const isTeam = watched.planInterest === 'team' || watched.planInterest === 'business';
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} noValidate className="grid gap-10 lg:grid-cols-[1fr_360px]">
         <div className="space-y-10">
           <fieldset className="space-y-4">
-            <legend className="font-display text-lg font-semibold">1. Starting point</legend>
-            <p className="text-sm text-muted-foreground">
-              Choose a plan tier to prefill suggested resources, or pick “Custom” or “Not sure”.
-            </p>
+            <legend className="font-display text-lg font-semibold">1. Plan</legend>
+            <p className="text-sm text-muted-foreground">Choose the plan closest to what you need, or let us recommend one.</p>
             <FormField
               control={form.control}
               name="planInterest"
               render={({ field }) => (
                 <FormItem>
-                  <ChoiceChips
-                    layout="cards"
-                    aria-label="Plan starting point"
-                    value={field.value}
-                    onChange={selectPlan}
-                    options={PLAN_OPTIONS}
-                  />
+                  <ChoiceChips layout="cards" aria-label="Plan" value={field.value} onChange={selectPlan} options={PLAN_OPTIONS} />
                   <FormMessage />
                 </FormItem>
               )}
@@ -189,97 +187,44 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
           </fieldset>
 
           <fieldset className="space-y-5">
-            <legend className="font-display text-lg font-semibold">2. Workload & operating system</legend>
-            <FormField
-              control={form.control}
-              name="workload"
-              render={({ field }) => (
-                <FormItem className="max-w-sm">
-                  <FormLabel>Primary workload</FormLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a workload" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {vpsWorkloads.map((workload) => (
-                        <SelectItem key={workload} value={workload}>
-                          {VPS_WORKLOAD_LABELS[workload]}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="operatingSystem"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel id="os-label">Operating system</FormLabel>
-                  <ChoiceChips aria-labelledby="os-label" value={field.value} onChange={field.onChange} options={OS_OPTIONS} />
-                  {field.value === 'windows-server' && (
-                    <FormDescription>
-                      Windows Server requires Microsoft licensing. Licensing options are discussed with your quote and are
-                      not included by default.
-                    </FormDescription>
-                  )}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </fieldset>
-
-          <fieldset className="space-y-5">
-            <legend className="font-display text-lg font-semibold">3. Suggested resources</legend>
-            <p className="text-sm text-muted-foreground">
-              Optional. These help us size your quote — WHOLNEX confirms the final allocation in writing.
-            </p>
-            {(
-              [
-                { name: 'vcpu', label: 'vCPU', options: numberChips(VCPU_OPTIONS, ' vCPU') },
-                { name: 'memoryGb', label: 'Memory', options: numberChips(MEMORY_OPTIONS, ' GB') },
-                { name: 'storageGb', label: 'Storage', options: numberChips(STORAGE_OPTIONS, ' GB') },
-              ] as const
-            ).map((resource) => (
+            <legend className="font-display text-lg font-semibold">2. How you will use it</legend>
+            <div className="grid gap-5 sm:grid-cols-2">
               <FormField
-                key={resource.name}
                 control={form.control}
-                name={resource.name}
+                name="useCase"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel id={`${resource.name}-label`}>{resource.label}</FormLabel>
-                    <ChoiceChips
-                      aria-labelledby={`${resource.name}-label`}
-                      value={field.value ? String(field.value) : NOT_SPECIFIED}
-                      onChange={(next) => field.onChange(next === NOT_SPECIFIED ? undefined : Number(next))}
-                      options={resource.options}
-                    />
+                    <FormLabel>Primary use</FormLabel>
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {vpnUseCases.map((useCase) => (
+                          <SelectItem key={useCase} value={useCase}>
+                            {VPN_USE_CASE_LABELS[useCase]}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            ))}
-          </fieldset>
-
-          <fieldset className="space-y-5">
-            <legend className="font-display text-lg font-semibold">4. Deployment details</legend>
-            <div className="grid gap-5 sm:grid-cols-2">
               <FormField
                 control={form.control}
-                name="quantity"
+                name="users"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Number of servers</FormLabel>
+                    <FormLabel>Number of users</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         inputMode="numeric"
                         min={1}
-                        max={100}
+                        max={10000}
                         value={field.value ?? ''}
                         onChange={(event) => field.onChange(event.target.value === '' ? undefined : Number(event.target.value))}
                         onBlur={field.onBlur}
@@ -291,40 +236,33 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="managementPreference"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Server administration</FormLabel>
-                    <Select value={field.value} onValueChange={(v) => field.onChange(v as ManagementPreference)}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {managementPreferences.map((pref) => (
-                          <SelectItem key={pref} value={pref}>
-                            {MANAGEMENT_PREFERENCE_LABELS[pref]}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            </div>
+            <FormField
+              control={form.control}
+              name="platforms"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel id="platforms-label">Devices you want to protect</FormLabel>
+                  <PlatformToggles labelledBy="platforms-label" value={field.value ?? []} onChange={field.onChange} />
+                  <FormDescription>
+                    The WHOLNEX app is currently available for {availableNames}. Selecting other devices tells us what you
+                    need.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="grid gap-5 sm:grid-cols-2">
               <FormField
                 control={form.control}
                 name="regionPreference"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Preferred hosting region (optional)</FormLabel>
+                    <FormLabel>Preferred server locations (optional)</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. United States, East Coast" {...field} value={field.value ?? ''} />
+                      <Input placeholder="e.g. United States, Europe" {...field} value={field.value ?? ''} />
                     </FormControl>
-                    <FormDescription>Region availability is confirmed in your quote.</FormDescription>
+                    <FormDescription>Server availability is confirmed in our reply.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -363,7 +301,7 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
                   <FormControl>
                     <Textarea
                       rows={5}
-                      placeholder="Software you plan to run, expected traffic, backup needs, migration details…"
+                      placeholder="Security requirements, systems you need to reach, questions about privacy…"
                       {...field}
                       value={field.value ?? ''}
                     />
@@ -375,7 +313,7 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
           </fieldset>
 
           <fieldset className="space-y-5">
-            <legend className="font-display text-lg font-semibold">5. Your contact details</legend>
+            <legend className="font-display text-lg font-semibold">3. Your contact details</legend>
             <div className="grid gap-5 sm:grid-cols-2">
               <FormField
                 control={form.control}
@@ -408,7 +346,7 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
                 name="companyName"
                 render={({ field }) => (
                   <FormItem className="sm:col-span-2">
-                    <FormLabel>Company (optional)</FormLabel>
+                    <FormLabel>Company {isTeam ? '' : '(optional)'}</FormLabel>
                     <FormControl>
                       <Input autoComplete="organization" {...field} value={field.value ?? ''} />
                     </FormControl>
@@ -442,28 +380,25 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
           </fieldset>
         </div>
 
-        <aside className="lg:sticky lg:top-24 lg:self-start" aria-label="Configuration summary">
+        <aside className="lg:sticky lg:top-24 lg:self-start" aria-label="Request summary">
           <div className="overflow-hidden rounded-2xl border border-navy-600 bg-navy-900 text-white shadow-2xl">
             <div className="flex items-center gap-3 border-b border-white/10 px-6 py-4">
-              <ServerCog className="h-5 w-5 text-cyan-400" aria-hidden="true" />
-              <p className="font-display font-semibold">Your configuration</p>
+              <ShieldCheck className="h-5 w-5 text-cyan-400" aria-hidden="true" />
+              <p className="font-display font-semibold">Your request</p>
             </div>
             <dl className="divide-y divide-white/10 px-6">
-              <SummaryRow label="Starting point" value={QUOTE_PLAN_INTEREST_LABELS[watched.planInterest ?? 'not-sure']} />
-              <SummaryRow label="Workload" value={watched.workload ? VPS_WORKLOAD_LABELS[watched.workload] : '—'} />
+              <SummaryRow label="Plan" value={QUOTE_PLAN_INTEREST_LABELS[watched.planInterest ?? 'not-sure']} />
+              <SummaryRow label="Primary use" value={watched.useCase ? VPN_USE_CASE_LABELS[watched.useCase] : '—'} />
               <SummaryRow
-                label="OS"
-                value={OPERATING_SYSTEM_PREFERENCE_LABELS[watched.operatingSystem ?? 'not-sure'].replace(' (licensing to be discussed)', '')}
+                label="Devices"
+                value={(watched.platforms ?? []).map((p) => DEVICE_PLATFORM_LABELS[p as DevicePlatform]).join(', ') || 'None selected'}
               />
-              <SummaryRow label="vCPU" value={resourceSummary(watched.vcpu, ' vCPU')} />
-              <SummaryRow label="Memory" value={resourceSummary(watched.memoryGb, ' GB')} />
-              <SummaryRow label="Storage" value={resourceSummary(watched.storageGb, ' GB')} />
-              <SummaryRow label="Servers" value={String(watched.quantity ?? 1)} />
+              <SummaryRow label="Users" value={String(watched.users ?? 1)} />
             </dl>
             <div className="space-y-4 border-t border-white/10 bg-white/[0.02] px-6 py-5">
               <p className="text-xs leading-relaxed text-slate-400">
                 Submitting sends this request to the WHOLNEX team. It is not an order and nothing is charged — you will
-                receive a written quote by email.
+                receive plan details and pricing by email.
               </p>
               <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? (
@@ -472,7 +407,7 @@ export function QuoteForm({ defaults }: { defaults?: QuoteFormDefaults }) {
                   </>
                 ) : (
                   <>
-                    <Send aria-hidden="true" /> Request my quote
+                    <Send aria-hidden="true" /> Send request
                   </>
                 )}
               </Button>

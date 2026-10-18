@@ -33,7 +33,7 @@ describe('SiteHeader', () => {
   it('renders the WHOLNEX primary navigation', () => {
     renderHeader();
 
-    for (const name of ['Home', 'VPS Hosting', 'Pricing', 'Infrastructure', 'Solutions', 'About', 'Contact']) {
+    for (const name of ['Home', 'VPN', 'Pricing', 'Download', 'Network', 'Solutions', 'About', 'Contact']) {
       expect(screen.getByRole('link', { name })).toBeInTheDocument();
     }
     expect(screen.getByRole('button', { name: 'Resources' })).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('SiteHeader', () => {
   it('shows the plans CTA and sign-in when signed out', () => {
     renderHeader();
 
-    expect(screen.getByRole('link', { name: 'View VPS Plans' })).toHaveAttribute('href', '/pricing');
+    expect(screen.getByRole('link', { name: 'View VPN Plans' })).toHaveAttribute('href', '/pricing');
     expect(screen.getByRole('link', { name: /sign in/i })).toHaveAttribute('href', '/login');
   });
 });

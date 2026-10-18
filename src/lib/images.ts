@@ -12,12 +12,6 @@ export interface SiteImage {
 }
 
 export const SITE_IMAGES = {
-  serverDriveBays: {
-    base: '/images/site/server-drive-bays',
-    widths: [960, 1920],
-    alt: 'Row of hot-swappable server drive bays with green status lights under blue data center lighting',
-    credit: { photographer: 'panumas nikhomkhai', source: 'https://www.pexels.com/photo/1148820/' },
-  },
   datacenterAisle: {
     base: '/images/site/datacenter-aisle',
     widths: [960, 1600],
@@ -29,12 +23,6 @@ export const SITE_IMAGES = {
     widths: [960, 1920],
     alt: 'Network rack cabinets in a data center lit in deep blue',
     credit: { photographer: 'panumas nikhomkhai', source: 'https://www.pexels.com/photo/17323801/' },
-  },
-  bladeServerChassis: {
-    base: '/images/site/blade-server-chassis',
-    widths: [960, 1920],
-    alt: 'Front of a blade server chassis with drive caddies and status LEDs',
-    credit: { photographer: 'panumas nikhomkhai', source: 'https://www.pexels.com/photo/17489160/' },
   },
   fiberPatchPanel: {
     base: '/images/site/fiber-patch-panel',

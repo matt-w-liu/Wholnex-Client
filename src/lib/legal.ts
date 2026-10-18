@@ -35,14 +35,14 @@ export const LEGAL_DOCUMENTS: Record<LegalDocumentId, LegalDocumentMeta> = {
     id: 'terms',
     title: 'Terms of Service',
     path: '/terms',
-    description: 'Terms governing use of the WHOLNEX website and WHOLNEX VPS hosting services.',
+    description: 'Terms governing use of the WHOLNEX website, the WHOLNEX VPN app, and WHOLNEX VPN services.',
     status: 'draft',
   },
   'acceptable-use': {
     id: 'acceptable-use',
     title: 'Acceptable Use Policy',
     path: '/acceptable-use',
-    description: 'Rules for acceptable use of WHOLNEX virtual private servers and network resources.',
+    description: 'Rules for acceptable use of the WHOLNEX VPN app and VPN network.',
     status: 'draft',
   },
   'refund-policy': {

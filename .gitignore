@@ -26,3 +26,7 @@ Thumbs.db
 .cache/
 .eslintcache
 *.pem
+
+# VPN installer binaries are distributed from public/downloads but are too large for git.
+# Host them on release storage in production (see src/lib/download.ts).
+public/downloads/*.exe

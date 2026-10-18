@@ -64,7 +64,7 @@ export function OrganizationJsonLd() {
         url: COMPANY.url,
         logo: `${COMPANY.url}/icon-512.png`,
         email: COMPANY.publicEmail,
-        description: `${COMPANY.name} provides virtual private server (VPS) hosting and cloud infrastructure services.`,
+        description: `${COMPANY.name} provides virtual private network (VPN) services for individuals and organizations.`,
         address: {
           '@type': 'PostalAddress',
           streetAddress: COMPANY.address.street,

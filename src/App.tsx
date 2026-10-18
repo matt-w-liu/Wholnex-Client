@@ -13,10 +13,11 @@ import { AdminRoute } from '@/components/admin-route';
 import { LoadingState } from '@/components/loading-state';
 
 const HomePage = lazy(() => import('@/pages/home'));
-const VpsHostingPage = lazy(() => import('@/pages/vps-hosting'));
+const VpnPage = lazy(() => import('@/pages/vpn'));
+const DownloadPage = lazy(() => import('@/pages/download'));
 const PricingPage = lazy(() => import('@/pages/pricing'));
 const QuotePage = lazy(() => import('@/pages/quote'));
-const InfrastructurePage = lazy(() => import('@/pages/infrastructure'));
+const NetworkPage = lazy(() => import('@/pages/network'));
 const SolutionsPage = lazy(() => import('@/pages/solutions'));
 const SecurityPage = lazy(() => import('@/pages/security'));
 const AboutPage = lazy(() => import('@/pages/about'));
@@ -61,10 +62,11 @@ function AppRoutes() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="vps-hosting" element={<VpsHostingPage />} />
+          <Route path="vpn" element={<VpnPage />} />
+          <Route path="download" element={<DownloadPage />} />
           <Route path="pricing" element={<PricingPage />} />
           <Route path="quote" element={<QuotePage />} />
-          <Route path="infrastructure" element={<InfrastructurePage />} />
+          <Route path="network" element={<NetworkPage />} />
           <Route path="solutions" element={<SolutionsPage />} />
           <Route path="security" element={<SecurityPage />} />
           <Route path="about" element={<AboutPage />} />
@@ -83,8 +85,10 @@ function AppRoutes() {
           <Route path="accessibility" element={<AccessibilityPage />} />
           <Route path="unauthorized" element={<UnauthorizedPage />} />
 
-          {/* Legacy route from the previous site build */}
+          {/* Legacy routes from previous site builds */}
           <Route path="website-terms" element={<Navigate to="/terms" replace />} />
+          <Route path="vps-hosting" element={<Navigate to="/vpn" replace />} />
+          <Route path="infrastructure" element={<Navigate to="/network" replace />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="account" element={<AccountPage />} />

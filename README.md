@@ -1,7 +1,7 @@
 # @wholnex/client
 
-React SPA for the WHOLNEX LLC website (`https://wholnex.net`) — VPS hosting marketing pages, the VPS
-quote configurator, contact form, customer accounts, and the admin console.
+React SPA for the WHOLNEX LLC website (`https://wholnex.net`) — VPN marketing pages, the Windows app
+download, the VPN plan request form, contact form, customer accounts, and the admin console.
 
 ## Prerequisites
 
@@ -34,9 +34,10 @@ Dev server: `http://localhost:5173` (Vite proxies `/api` to `:5000`).
 | File | Contents |
 | --- | --- |
 | `src/lib/constants.ts` | Company facts (name, CEO, address, domain), navigation, footer |
-| `src/lib/vps-plans.ts` | VPS plan tiers, confirmed specs/pricing (currently `null`), dev-only draft data |
-| `src/lib/capabilities.ts` | Infrastructure/security capabilities (`confirmed` flags) and hosting regions |
-| `src/lib/operating-systems.ts` | OS options shown in the OS explorer and configurator |
+| `src/lib/vpn-plans.ts` | VPN plan tiers, confirmed features/pricing (currently `null`), dev-only draft data |
+| `src/lib/capabilities.ts` | VPN network/security capabilities (`confirmed` flags) and server locations |
+| `src/lib/download.ts` | App downloads: URL, size, SHA-256, version, signing status |
+| `src/lib/platforms.ts` | Platform availability, derived from the real downloads |
 | `src/lib/content.ts` | Use cases, getting-started steps, FAQ |
 | `src/lib/legal.ts` | Legal document status (`draft` / `approved`) |
 | `src/lib/images.ts` | Licensed photography registry with credits |
@@ -76,6 +77,7 @@ See [`.env.example`](.env.example):
 - `VITE_API_URL` — e.g. `https://wholnex.net/api/v1`
 - `VITE_SITE_URL` — e.g. `https://wholnex.net`
 - `VITE_PUBLIC_CONTACT_EMAIL` — optional override; defaults to `support@wholnex.net`
+- `VITE_WINDOWS_INSTALLER_URL` — optional; HTTPS URL of the hosted installer (defaults to `/downloads/wholnex-vpn-setup.exe`)
 - `VITE_SHOW_DRAFT_PLAN_DATA` — development only; previews draft plan data (ignored in production)
 
 ## Logo

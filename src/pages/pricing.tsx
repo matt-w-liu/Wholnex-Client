@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Building2, CheckCircle2, FlaskConical, Info, UserCog, Wrench } from 'lucide-react';
+import { ArrowRight, Building2, CheckCircle2, FlaskConical, Info, User, Users } from 'lucide-react';
 import { BILLING_FAQS } from '@/lib/content';
-import { getResolvedPlans, hasAnnualPricing, QUOTE_CONFIRMS } from '@/lib/vps-plans';
+import { getResolvedPlans, hasAnnualPricing, QUOTE_CONFIRMS } from '@/lib/vpn-plans';
 import { Seo } from '@/components/seo';
 import { PageHero } from '@/components/page-hero';
 import { SectionHeading } from '@/components/section-heading';
@@ -24,16 +24,16 @@ export function PricingPage() {
   return (
     <>
       <Seo
-        title="VPS Plans & Pricing"
-        description="Compare WHOLNEX VPS plan tiers — Starter, Standard, Performance, and Business — and request a written quote with confirmed specifications and pricing for your workload."
+        title="VPN Plans & Pricing"
+        description="Compare WHOLNEX VPN plans — Personal, Plus, Team, and Business — and request plan details and pricing for yourself or your organization."
         path="/pricing"
       />
       <PageHero
         size="compact"
-        eyebrow="VPS plans"
+        eyebrow="VPN plans"
         breadcrumbs={[{ name: 'Pricing', path: '/pricing' }]}
-        title="VPS plans built around your workload"
-        description="Pick the tier closest to what you need. WHOLNEX replies with a written quote that confirms the exact resources, region, and price — before anything is provisioned or billed."
+        title="VPN plans for people and teams"
+        description="Pick the plan closest to what you need. WHOLNEX replies with the plan details and price it can confirm — nothing is charged until you agree."
       />
 
       <section className="container-page py-16 sm:py-20">
@@ -42,7 +42,7 @@ export function PricingPage() {
             <FlaskConical className="h-4 w-4" />
             <AlertTitle>Development preview — draft plan data</AlertTitle>
             <AlertDescription>
-              Specifications and prices below are placeholders from DRAFT_PLAN_DATA, shown only because
+              Features and prices below are placeholders from DRAFT_PLAN_DATA, shown only because
               VITE_SHOW_DRAFT_PLAN_DATA is enabled in a development build. They are not WHOLNEX offerings and never
               appear in production.
             </AlertDescription>
@@ -51,10 +51,10 @@ export function PricingPage() {
         {!anyPricing && (
           <Alert variant="info" className="mb-8">
             <Info className="h-4 w-4" />
-            <AlertTitle>Pricing is provided by written quote</AlertTitle>
+            <AlertTitle>Prices have not been published yet</AlertTitle>
             <AlertDescription>
-              WHOLNEX confirms specifications and pricing for each configuration individually. Choose a tier to
-              start your request — there is no checkout and no charge until you approve a quote.
+              WHOLNEX confirms plan details and pricing with you directly. Choose a plan to send a request — there is no
+              checkout on this website and no charge until you agree. You can download the Windows app at any time.
             </AlertDescription>
           </Alert>
         )}
@@ -77,7 +77,7 @@ export function PricingPage() {
         </div>
 
         <div className="mt-10 rounded-2xl border border-border bg-muted/30 p-6 sm:p-8">
-          <h2 className="font-display text-lg font-semibold">Every WHOLNEX quote confirms, in writing</h2>
+          <h2 className="font-display text-lg font-semibold">WHOLNEX confirms, in writing</h2>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {QUOTE_CONFIRMS.map((item) => (
               <li key={item} className="flex items-start gap-2.5 text-sm">
@@ -95,9 +95,9 @@ export function PricingPage() {
             eyebrow="Compare plans"
             title="Plan comparison"
             description={
-              plans.some((plan) => plan.specs)
-                ? 'Side-by-side specifications for each plan tier.'
-                : 'How the four tiers are positioned. Exact specifications are confirmed for your configuration in your quote.'
+              plans.some((plan) => plan.features)
+                ? 'Side-by-side features for each plan.'
+                : 'How the four plans are positioned. Exact features and prices are confirmed with you in writing.'
             }
           />
           <div className="mt-10">
@@ -108,27 +108,25 @@ export function PricingPage() {
 
       <section className="container-page py-20 sm:py-24">
         <SectionHeading
-          eyebrow="Management"
-          title="Self-managed or managed — know the difference"
-          description="The management level determines who looks after the operating system and software on your server."
+          eyebrow="Individuals or teams"
+          title="Which kind of plan do you need?"
+          description="Personal and Plus plans cover your own devices. Team and Business plans add users your organization manages."
         />
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
           <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <UserCog className="h-6 w-6 text-brand" aria-hidden="true" />
-            <h3 className="mt-4 font-display text-xl font-semibold">Self-managed (unmanaged)</h3>
+            <User className="h-6 w-6 text-brand" aria-hidden="true" />
+            <h3 className="mt-4 font-display text-xl font-semibold">Personal &amp; Plus</h3>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              The provider keeps the underlying infrastructure running. You administer everything inside the server:
-              OS updates, software installation, security hardening, monitoring, and backups of your data. Ideal for
-              developers and teams comfortable with server administration.
+              For one person protecting their own devices — on public Wi-Fi, while traveling, or for everyday privacy at
+              home. Choose Plus if you want coverage on more devices.
             </p>
           </div>
           <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <Wrench className="h-6 w-6 text-cyan" aria-hidden="true" />
-            <h3 className="mt-4 font-display text-xl font-semibold">Managed</h3>
+            <Users className="h-6 w-6 text-cyan" aria-hidden="true" />
+            <h3 className="mt-4 font-display text-xl font-semibold">Team &amp; Business</h3>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              The provider also takes on agreed administrative tasks, such as patching, monitoring, or
-              troubleshooting. If you want help administering your server, say so in your request — your WHOLNEX
-              quote states exactly which, if any, management services are included.
+              For organizations giving staff a consistent, encrypted connection. Tell us how many users you have and
+              which devices they use, and we will confirm the plan, pricing, and any team features in writing.
             </p>
           </div>
         </div>
@@ -139,7 +137,7 @@ export function PricingPage() {
           <SectionHeading
             eyebrow="Billing FAQ"
             title="Questions about pricing and billing"
-            description="How quotes, billing, and support work at WHOLNEX."
+            description="How plans, billing, and support work at WHOLNEX."
           />
           <FaqAccordion items={BILLING_FAQS} idPrefix="billing" />
         </div>
@@ -152,17 +150,17 @@ export function PricingPage() {
               <Building2 className="h-6 w-6" aria-hidden="true" />
             </span>
             <div>
-              <h2 className="font-display text-2xl font-semibold">Need something bigger or more specific?</h2>
+              <h2 className="font-display text-2xl font-semibold">Need a plan for your organization?</h2>
               <p className="mt-2 max-w-2xl text-muted-foreground">
-                Multiple servers, unusual resource ratios, specific regions, or a migration from another provider —
-                describe your requirements and WHOLNEX will put together a custom configuration quote.
+                Many users, specific server locations, or particular security requirements — describe what you need and
+                WHOLNEX will put together a plan for your team.
               </p>
             </div>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
             <Button size="lg" asChild>
-              <Link to="/quote?plan=custom">
-                Request a custom quote <ArrowRight aria-hidden="true" />
+              <Link to="/quote?plan=business">
+                Request a team plan <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
@@ -173,9 +171,9 @@ export function PricingPage() {
       </section>
 
       <CtaBand
-        title="Not sure which tier fits?"
-        description="Describe your application and expected traffic. We will recommend a starting configuration and confirm it in writing."
-        primary={{ label: 'Configure your VPS', href: '/quote' }}
+        title="Not sure which plan fits?"
+        description="Tell us who needs protection and on which devices. We will recommend a plan and confirm it in writing."
+        primary={{ label: 'Request a plan', href: '/quote' }}
         secondary={{ label: 'Read the FAQ', href: '/faq' }}
       />
     </>

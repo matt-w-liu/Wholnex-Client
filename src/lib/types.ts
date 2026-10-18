@@ -1,13 +1,12 @@
 import type {
   ContactReason,
-  ManagementPreference,
-  OperatingSystemPreference,
+  DevicePlatform,
   QuotePlanInterest,
   QuoteTimeline,
   RequestStatus,
   UserRole,
   UserStatus,
-  VpsWorkload,
+  VpnUseCase,
 } from '@wholnex/shared';
 
 export interface Pagination {
@@ -57,13 +56,9 @@ export interface ContactMessage {
 export interface QuoteRequest {
   id: string;
   planInterest: QuotePlanInterest;
-  workload: VpsWorkload;
-  operatingSystem: OperatingSystemPreference;
-  vcpu?: number;
-  memoryGb?: number;
-  storageGb?: number;
-  quantity: number;
-  managementPreference: ManagementPreference;
+  useCase: VpnUseCase;
+  platforms: DevicePlatform[];
+  users: number;
   regionPreference?: string;
   timeline?: QuoteTimeline;
   requirements?: string;

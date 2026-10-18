@@ -1,10 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Mail, ServerCog, Users } from 'lucide-react';
+import { LayoutDashboard, Mail, ShieldCheck, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const ADMIN_NAV = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-  { label: 'Quote Requests', href: '/admin/quote-requests', icon: ServerCog },
+  { label: 'Plan Requests', href: '/admin/quote-requests', icon: ShieldCheck },
   { label: 'Contact Messages', href: '/admin/contact', icon: Mail },
   { label: 'Users', href: '/admin/users', icon: Users },
 ];

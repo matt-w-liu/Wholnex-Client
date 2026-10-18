@@ -220,3 +220,17 @@
     text-wrap: pretty;
   }
 }
+
+/* Moving stripes inside the VPN tunnel diagram. Stops automatically under reduced motion. */
+@layer components {
+  .tunnel-flow {
+    background-image: repeating-linear-gradient(90deg, rgb(34 211 238 / 0.9) 0 10px, transparent 10px 22px);
+    background-size: 44px 100%;
+    animation: tunnel-flow 1.2s linear infinite;
+  }
+
+  @keyframes tunnel-flow {
+    from { background-position: 0 0; }
+    to { background-position: 44px 0; }
+  }
+}

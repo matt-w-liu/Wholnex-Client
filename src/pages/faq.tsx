@@ -10,8 +10,8 @@ export function FaqPage() {
   return (
     <>
       <Seo
-        title="VPS Hosting FAQ"
-        description="Answers to common questions about VPS hosting: what a VPS is, choosing CPU and RAM, operating systems, root access, security, backups, billing, and support at WHOLNEX."
+        title="VPN FAQ"
+        description="Answers to common questions about VPNs and WHOLNEX: what a VPN does and does not protect, the Windows app, privacy and logging, plans, and support."
         path="/faq"
       />
       <FaqJsonLd items={ALL_FAQS} />
@@ -20,7 +20,7 @@ export function FaqPage() {
         eyebrow="FAQ"
         breadcrumbs={[{ name: 'FAQ', path: '/faq' }]}
         title="Frequently asked questions"
-        description="Everything you need to know about VPS hosting and how WHOLNEX works. Can’t find your answer? Ask the team."
+        description="Everything you need to know about VPNs and how WHOLNEX works. Can’t find your answer? Ask the team."
       />
 
       <section className="container-page grid gap-12 py-14 sm:py-20 lg:grid-cols-[240px_1fr]">

@@ -11,7 +11,7 @@ export type UserStatus = (typeof userStatuses)[number];
 export const requestStatuses = ['new', 'in-progress', 'resolved', 'archived'] as const;
 export type RequestStatus = (typeof requestStatuses)[number];
 
-export const contactReasons = ['sales', 'vps-configuration', 'technical-support', 'general'] as const;
+export const contactReasons = ['sales', 'business-vpn', 'technical-support', 'general'] as const;
 export type ContactReason = (typeof contactReasons)[number];
 
 export const preferredContactMethods = ['email', 'phone', 'either'] as const;
@@ -22,84 +22,61 @@ export type EmailDeliveryStatus = (typeof emailDeliveryStatuses)[number];
 
 export const CONTACT_REASON_LABELS: Record<ContactReason, string> = {
   sales: 'Sales inquiry',
-  'vps-configuration': 'VPS configuration inquiry',
+  'business-vpn': 'Business / team VPN inquiry',
   'technical-support': 'Technical support',
   general: 'General inquiry',
 };
 
-// --- VPS quote request enums -------------------------------------------------
+// --- VPN plan / quote request enums -------------------------------------------
 // Plan identifiers are presentation tiers used to start a conversation with sales.
-// They do not imply confirmed specifications or pricing.
+// They do not imply confirmed features or pricing.
 
-export const vpsPlanIds = ['starter', 'standard', 'performance', 'business'] as const;
-export type VpsPlanId = (typeof vpsPlanIds)[number];
+export const vpnPlanIds = ['personal', 'plus', 'team', 'business'] as const;
+export type VpnPlanId = (typeof vpnPlanIds)[number];
 
-export const quotePlanInterests = [...vpsPlanIds, 'custom', 'not-sure'] as const;
+export const quotePlanInterests = [...vpnPlanIds, 'custom', 'not-sure'] as const;
 export type QuotePlanInterest = (typeof quotePlanInterests)[number];
 
-export const vpsWorkloads = [
-  'websites',
-  'web-applications',
-  'development-testing',
-  'databases',
-  'api-services',
-  'self-hosted-tools',
-  'containers',
+export const vpnUseCases = [
+  'remote-work',
+  'public-wifi',
+  'online-privacy',
+  'travel',
+  'team-access',
   'other',
 ] as const;
-export type VpsWorkload = (typeof vpsWorkloads)[number];
+export type VpnUseCase = (typeof vpnUseCases)[number];
 
-export const operatingSystemPreferences = [
-  'ubuntu',
-  'debian',
-  'rocky-linux',
-  'almalinux',
-  'windows-server',
-  'other',
-  'not-sure',
-] as const;
-export type OperatingSystemPreference = (typeof operatingSystemPreferences)[number];
-
-export const managementPreferences = ['self-managed', 'assisted', 'not-sure'] as const;
-export type ManagementPreference = (typeof managementPreferences)[number];
+export const devicePlatforms = ['windows', 'macos', 'ios', 'android', 'linux'] as const;
+export type DevicePlatform = (typeof devicePlatforms)[number];
 
 export const quoteTimelines = ['immediately', 'within-1-month', '1-3-months', 'exploring'] as const;
 export type QuoteTimeline = (typeof quoteTimelines)[number];
 
 export const QUOTE_PLAN_INTEREST_LABELS: Record<QuotePlanInterest, string> = {
-  starter: 'Starter VPS',
-  standard: 'Standard VPS',
-  performance: 'Performance VPS',
-  business: 'Business VPS',
-  custom: 'Custom configuration',
+  personal: 'Personal VPN',
+  plus: 'Plus VPN',
+  team: 'Team VPN',
+  business: 'Business VPN',
+  custom: 'Custom plan',
   'not-sure': 'Not sure yet',
 };
 
-export const VPS_WORKLOAD_LABELS: Record<VpsWorkload, string> = {
-  websites: 'Websites',
-  'web-applications': 'Web applications',
-  'development-testing': 'Development & testing',
-  databases: 'Databases',
-  'api-services': 'API services & backends',
-  'self-hosted-tools': 'Self-hosted tools',
-  containers: 'Containerized workloads',
+export const VPN_USE_CASE_LABELS: Record<VpnUseCase, string> = {
+  'remote-work': 'Remote work',
+  'public-wifi': 'Public Wi-Fi protection',
+  'online-privacy': 'Everyday online privacy',
+  travel: 'Travel',
+  'team-access': 'Secure team access',
   other: 'Other',
 };
 
-export const OPERATING_SYSTEM_PREFERENCE_LABELS: Record<OperatingSystemPreference, string> = {
-  ubuntu: 'Ubuntu Server',
-  debian: 'Debian',
-  'rocky-linux': 'Rocky Linux',
-  almalinux: 'AlmaLinux',
-  'windows-server': 'Windows Server (licensing to be discussed)',
-  other: 'Other / custom image',
-  'not-sure': 'Not sure yet',
-};
-
-export const MANAGEMENT_PREFERENCE_LABELS: Record<ManagementPreference, string> = {
-  'self-managed': 'Self-managed — I administer the server',
-  assisted: 'I would like to discuss assistance options',
-  'not-sure': 'Not sure yet',
+export const DEVICE_PLATFORM_LABELS: Record<DevicePlatform, string> = {
+  windows: 'Windows',
+  macos: 'macOS',
+  ios: 'iPhone / iPad',
+  android: 'Android',
+  linux: 'Linux',
 };
 
 export const QUOTE_TIMELINE_LABELS: Record<QuoteTimeline, string> = {
@@ -218,17 +195,17 @@ export const contactAdminUpdateSchema = z.object({
   internalNotes: z.string().max(5000).optional(),
 });
 
-// --- VPS quote / configuration request -------------------------------------------
+// --- VPN plan / team quote request ------------------------------------------------
 
 export const quoteRequestSchema = z.object({
   planInterest: z.enum(quotePlanInterests),
-  workload: z.enum(vpsWorkloads),
-  operatingSystem: z.enum(operatingSystemPreferences).default('not-sure'),
-  vcpu: z.number().int().min(1).max(64).optional(),
-  memoryGb: z.number().int().min(1).max(512).optional(),
-  storageGb: z.number().int().min(10).max(10000).optional(),
-  quantity: z.number().int().min(1, 'At least one server').max(100).default(1),
-  managementPreference: z.enum(managementPreferences).default('not-sure'),
+  useCase: z.enum(vpnUseCases),
+  platforms: z
+    .array(z.enum(devicePlatforms))
+    .min(1, 'Select at least one device platform')
+    .max(devicePlatforms.length)
+    .refine((list) => new Set(list).size === list.length, 'Duplicate platforms'),
+  users: z.number().int().min(1, 'At least one user').max(10000).default(1),
   regionPreference: optionalText(120),
   timeline: z.enum(quoteTimelines).optional(),
   requirements: optionalText(3000),

@@ -3,13 +3,13 @@
  * dates, phone numbers, customer counts, certifications, or other facts that have not been
  * confirmed by the company.
  *
- * The address is a business contact address. It is NOT a data center or hosting location —
- * see HOSTING_REGIONS in src/lib/capabilities.ts for hosting-location information.
+ * The address is a business contact address. It is NOT a VPN server location —
+ * see SERVER_LOCATIONS in src/lib/capabilities.ts for server-location information.
  */
 export const COMPANY = {
   name: 'WHOLNEX LLC',
   brand: 'WHOLNEX',
-  descriptor: 'Virtual Private Server Hosting & Cloud Infrastructure',
+  descriptor: 'Secure VPN & Private Networking',
   url: 'https://wholnex.net',
   ceo: {
     name: 'Ravindra Kuvar',
@@ -50,9 +50,10 @@ export interface NavLink {
 
 export const PRIMARY_NAV: NavLink[] = [
   { label: 'Home', href: '/' },
-  { label: 'VPS Hosting', href: '/vps-hosting' },
+  { label: 'VPN', href: '/vpn' },
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Infrastructure', href: '/infrastructure' },
+  { label: 'Download', href: '/download' },
+  { label: 'Network', href: '/network' },
   { label: 'Solutions', href: '/solutions' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
@@ -62,12 +63,12 @@ export const RESOURCES_NAV: NavLink[] = [
   {
     label: 'FAQ',
     href: '/faq',
-    description: 'Answers about VPS hosting, sizing, security, and how quoting works.',
+    description: 'Answers about how a VPN works, privacy, the app, and plans.',
   },
   {
     label: 'Security',
     href: '/security',
-    description: 'How VPS security works and who is responsible for each layer.',
+    description: 'What a VPN protects, what it does not, and how to stay safe.',
   },
   {
     label: 'Support',
@@ -80,9 +81,10 @@ export const FOOTER_LINKS: { title: string; links: NavLink[] }[] = [
   {
     title: 'Services',
     links: [
-      { label: 'VPS Hosting', href: '/vps-hosting' },
-      { label: 'VPS Plans', href: '/pricing' },
-      { label: 'Infrastructure', href: '/infrastructure' },
+      { label: 'WHOLNEX VPN', href: '/vpn' },
+      { label: 'VPN Plans', href: '/pricing' },
+      { label: 'Download', href: '/download' },
+      { label: 'Network', href: '/network' },
       { label: 'Solutions', href: '/solutions' },
     ],
   },

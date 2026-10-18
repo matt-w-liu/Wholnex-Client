@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, Download } from 'lucide-react';
 import { USE_CASES } from '@/lib/content';
 import { SITE_IMAGES } from '@/lib/images';
 import { Seo } from '@/components/seo';
@@ -15,31 +15,27 @@ export function SolutionsPage() {
   return (
     <>
       <Seo
-        title="VPS Use Cases — Websites, Apps, Databases & More"
-        description="How VPS hosting supports websites, business applications, software development, testing, APIs, databases, self-hosted tools, CI pipelines, and containerized applications."
+        title="VPN Use Cases — Public Wi-Fi, Remote Work, Travel & Privacy"
+        description="How WHOLNEX VPN helps on public Wi-Fi, for remote work and travel, for everyday online privacy, and for giving teams secure, encrypted connections."
         path="/solutions"
       />
       <PageHero
         eyebrow="Solutions"
         breadcrumbs={[{ name: 'Solutions', path: '/solutions' }]}
-        title="One server type, many ways to put it to work"
-        description="A virtual private server runs whatever software you choose. These are the workloads teams most often bring to VPS hosting — and how to set each one up well."
+        title="Where a VPN makes a difference"
+        description="From the café down the street to a team spread across time zones — the situations where an encrypted connection matters most."
         image={SITE_IMAGES.ethernetSwitchCabling}
         actions={
           <Button size="lg" asChild>
-            <Link to="/quote">
-              Configure a VPS <ArrowRight aria-hidden="true" />
+            <Link to="/download">
+              <Download aria-hidden="true" /> Download for Windows
             </Link>
           </Button>
         }
       />
 
       <section className="container-page py-20 sm:py-24">
-        <SectionHeading
-          eyebrow="Featured"
-          title="Common starting points"
-          description="Four workloads that make up a large share of VPS deployments."
-        />
+        <SectionHeading eyebrow="Featured" title="Common reasons people use a VPN" />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((useCase) => (
             <a
@@ -66,8 +62,8 @@ export function SolutionsPage() {
         <div className="container-page">
           <SectionHeading
             eyebrow="All use cases"
-            title="What you can run on a WHOLNEX VPS"
-            description="Each card links to the configurator with the workload preselected, so your quote request starts in the right place."
+            title="How WHOLNEX VPN fits in"
+            description="Each card links to the plan request form with that use preselected."
           />
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
             {USE_CASES.map((useCase) => (
@@ -93,37 +89,20 @@ export function SolutionsPage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-6">
-                  <ul className="flex flex-wrap gap-1.5" aria-label="Common tools">
-                    {useCase.stack.map((tool) => (
-                      <li key={tool} className="rounded-md border border-border bg-muted/50 px-2 py-0.5 font-mono text-xs text-muted-foreground">
-                        {tool}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    to={`/quote?workload=${useCase.workload}`}
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:underline"
-                    aria-label={`Request a VPS for ${useCase.title.toLowerCase()}`}
-                  >
-                    Request this setup <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </div>
+                <Link
+                  to={`/quote?use=${useCase.useCase}`}
+                  className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold text-brand hover:underline"
+                  aria-label={`Request a plan for ${useCase.title.toLowerCase()}`}
+                >
+                  Request a plan for this <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
               </article>
             ))}
           </div>
-          <p className="mt-8 text-xs text-muted-foreground">
-            Tool and product names are trademarks of their respective owners and are listed only as examples of
-            software commonly run on VPS servers; their mention does not imply endorsement or partnership.
-          </p>
         </div>
       </section>
 
-      <CtaBand
-        title="Have a workload in mind?"
-        description="Describe the software you plan to run and the traffic you expect. We will recommend a configuration and confirm it in writing."
-        primary={{ label: 'Configure your VPS', href: '/quote' }}
-      />
+      <CtaBand />
     </>
   );
 }

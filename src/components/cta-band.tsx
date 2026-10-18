@@ -12,10 +12,10 @@ interface CtaBandProps {
 
 /** Closing call-to-action band on an always-dark surface. */
 export function CtaBand({
-  title = 'Ready to plan your server?',
-  description = 'Tell us what you want to run. WHOLNEX will reply with a written configuration, price, and availability — no commitment until you approve it.',
-  primary = { label: 'Explore VPS Plans', href: '/pricing' },
-  secondary = { label: 'Contact Sales', href: '/contact?category=sales' },
+  title = 'Ready to browse more privately?',
+  description = 'Download WHOLNEX VPN for Windows, or tell us what you and your team need and we will confirm plan details and pricing in writing.',
+  primary = { label: 'Download for Windows', href: '/download' },
+  secondary = { label: 'View VPN Plans', href: '/pricing' },
 }: CtaBandProps) {
   return (
     <section className="container-page py-16 sm:py-24">

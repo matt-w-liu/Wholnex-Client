@@ -6,13 +6,13 @@ import { updatePasswordSchema, updateProfileSchema } from '@wholnex/shared';
 import type { z } from 'zod';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Mail, ServerCog } from 'lucide-react';
+import { Mail, ShieldCheck } from 'lucide-react';
 import { apiGet, apiPatch, getErrorMessage } from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
 import type { ContactMessage, QuoteRequest } from '@/lib/types';
 import { formatDate } from '@/lib/utils';
 import { CONTACT_REASON_LABELS_MAP } from '@/lib/contact-options';
-import { OPERATING_SYSTEM_PREFERENCE_LABELS, QUOTE_PLAN_INTEREST_LABELS, VPS_WORKLOAD_LABELS } from '@wholnex/shared';
+import { DEVICE_PLATFORM_LABELS, QUOTE_PLAN_INTEREST_LABELS, VPN_USE_CASE_LABELS } from '@wholnex/shared';
 import { Seo } from '@/components/seo';
 import { PageHero } from '@/components/page-hero';
 import { Button } from '@/components/ui/button';
@@ -41,18 +41,18 @@ function QuoteRequestsTab() {
     queryFn: () => apiGet<{ items: QuoteRequest[] }>('/quote-requests/mine'),
   });
 
-  if (isLoading) return <LoadingState label="Loading your quote requests…" />;
+  if (isLoading) return <LoadingState label="Loading your plan requests…" />;
   const items = data?.items ?? [];
 
   if (items.length === 0) {
     return (
       <EmptyState
-        icon={ServerCog}
-        title="No quote requests yet"
-        description="VPS configuration requests you submit will appear here."
+        icon={ShieldCheck}
+        title="No plan requests yet"
+        description="VPN plan requests you submit will appear here."
         action={
           <Button variant="outline" asChild>
-            <Link to="/quote">Configure a VPS</Link>
+            <Link to="/quote">Request a plan</Link>
           </Button>
         }
       />
@@ -69,7 +69,8 @@ function QuoteRequestsTab() {
               <Badge variant="secondary" className="capitalize">{item.status.replace('-', ' ')}</Badge>
             </div>
             <p className="text-xs text-muted-foreground">
-              {formatDate(item.createdAt)} · {VPS_WORKLOAD_LABELS[item.workload]} · {OPERATING_SYSTEM_PREFERENCE_LABELS[item.operatingSystem]}
+              {formatDate(item.createdAt)} · {VPN_USE_CASE_LABELS[item.useCase]} · {item.users} {item.users === 1 ? 'user' : 'users'} ·{' '}
+              {item.platforms.map((p) => DEVICE_PLATFORM_LABELS[p]).join(', ')}
             </p>
             {item.requirements && <p className="text-sm text-muted-foreground">{item.requirements}</p>}
           </CardContent>
@@ -162,7 +163,7 @@ export function AccountPage() {
           <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1">
             <TabsTrigger value="profile">Profile</TabsTrigger>
             <TabsTrigger value="password">Password</TabsTrigger>
-            <TabsTrigger value="quotes">Quote Requests</TabsTrigger>
+            <TabsTrigger value="quotes">Plan Requests</TabsTrigger>
             <TabsTrigger value="messages">Messages</TabsTrigger>
           </TabsList>
 

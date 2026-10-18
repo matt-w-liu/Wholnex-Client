@@ -1,17 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
-import {
-  Blocks,
-  Boxes,
-  Code2,
-  Database,
-  FlaskConical,
-  Globe,
-  Layers,
-  Network,
-  Server,
-  Workflow,
-} from 'lucide-react';
-import type { VpsWorkload } from '@wholnex/shared';
+import { Briefcase, Coffee, EyeOff, Home, Plane, Users } from 'lucide-react';
+import type { VpnUseCase } from '@wholnex/shared';
 import type { SiteImageKey } from '@/lib/images';
 
 // --- Use cases ------------------------------------------------------------------------------
@@ -22,145 +11,86 @@ export interface UseCase {
   icon: LucideIcon;
   summary: string;
   details: string[];
-  stack: string[];
-  workload: VpsWorkload;
+  useCase: VpnUseCase;
   image?: SiteImageKey;
 }
 
 export const USE_CASES: UseCase[] = [
   {
-    id: 'websites',
-    title: 'Website hosting',
-    icon: Globe,
-    summary: 'Run marketing sites, blogs, and CMS platforms on resources that are not shared with hundreds of other sites.',
+    id: 'public-wifi',
+    title: 'Public Wi-Fi protection',
+    icon: Coffee,
+    summary: 'Encrypt your connection on café, hotel, and airport networks you do not control.',
     details: [
-      'Install the exact web server and PHP or Node.js versions your site needs',
-      'Host several sites on one server with virtual hosts',
-      'Issue free TLS certificates with Let’s Encrypt',
+      'Keeps other people on the same network from reading your traffic',
+      'Reduces exposure to rogue or misconfigured hotspots',
+      'Works alongside HTTPS for an extra layer of protection',
     ],
-    stack: ['Nginx', 'Apache', 'WordPress', 'PHP-FPM'],
-    workload: 'websites',
-    image: 'ethernetSwitchCabling',
-  },
-  {
-    id: 'business-applications',
-    title: 'Business applications',
-    icon: Layers,
-    summary: 'Host internal tools, line-of-business software, and customer portals on a server your team controls.',
-    details: [
-      'Keep data on infrastructure you administer',
-      'Integrate with existing identity and email systems',
-      'Size CPU and memory to the number of users',
-    ],
-    stack: ['ERP / CRM', 'Intranets', '.NET', 'Java'],
-    workload: 'web-applications',
-    image: 'bladeServerChassis',
-  },
-  {
-    id: 'software-development',
-    title: 'Software development',
-    icon: Code2,
-    summary: 'Give developers a persistent remote environment that matches production instead of a laptop approximation.',
-    details: [
-      'Remote development over SSH from your editor',
-      'Consistent toolchains shared across a team',
-      'Long-running processes that outlive a laptop session',
-    ],
-    stack: ['VS Code Remote', 'Git', 'tmux', 'Language runtimes'],
-    workload: 'development-testing',
-  },
-  {
-    id: 'testing',
-    title: 'Testing & staging',
-    icon: FlaskConical,
-    summary: 'Stand up staging servers that mirror production so releases are verified before customers see them.',
-    details: [
-      'Rehearse upgrades and migrations safely',
-      'Run end-to-end and load tests in isolation',
-      'Tear down and rebuild environments as needed',
-    ],
-    stack: ['Staging sites', 'Playwright', 'k6', 'Database copies'],
-    workload: 'development-testing',
-  },
-  {
-    id: 'api-backends',
-    title: 'Application backends',
-    icon: Server,
-    summary: 'Serve mobile and web app backends with predictable resources and full control of the runtime.',
-    details: [
-      'Run Node.js, Python, Go, or Java services behind a reverse proxy',
-      'Pin runtime versions and system libraries',
-      'Scale vertically as request volume grows',
-    ],
-    stack: ['Node.js', 'Django', 'Go', 'Spring Boot'],
-    workload: 'api-services',
+    useCase: 'public-wifi',
     image: 'fiberPatchPanel',
   },
   {
-    id: 'databases',
-    title: 'Databases',
-    icon: Database,
-    summary: 'Run relational and NoSQL databases with dedicated memory allocations and fast local storage.',
+    id: 'remote-work',
+    title: 'Remote work',
+    icon: Briefcase,
+    summary: 'Give remote and hybrid staff an encrypted connection wherever they work.',
     details: [
-      'Tune memory settings for your dataset',
-      'Keep databases on a private network next to app servers',
-      'Schedule dumps and off-server backups',
+      'Consistent protection from home, coworking spaces, and client sites',
+      'A predictable exit address for allow-listing, where a dedicated IP is available',
+      'One app to install on each Windows PC',
     ],
-    stack: ['PostgreSQL', 'MySQL / MariaDB', 'MongoDB', 'Redis'],
-    workload: 'databases',
+    useCase: 'remote-work',
+    image: 'networkRackCabinets',
   },
   {
-    id: 'self-hosted-tools',
-    title: 'Self-hosted tools',
-    icon: Boxes,
-    summary: 'Host the open-source tools your team relies on instead of paying per-seat SaaS fees.',
+    id: 'online-privacy',
+    title: 'Everyday privacy',
+    icon: EyeOff,
+    summary: 'Keep your internet provider and local network from seeing which sites you visit.',
     details: [
-      'Git hosting, wikis, analytics, and file sync',
-      'Keep sensitive data under your own administration',
-      'Customize configuration without vendor limits',
+      'Your provider sees an encrypted connection to the VPN, not your destinations',
+      'Websites see the VPN server’s address instead of your home address',
+      'Pairs well with private browsing habits and tracker blocking',
     ],
-    stack: ['Gitea', 'Nextcloud', 'Plausible', 'Uptime Kuma'],
-    workload: 'self-hosted-tools',
+    useCase: 'online-privacy',
+    image: 'ethernetSwitchCabling',
   },
   {
-    id: 'pipelines',
-    title: 'Development pipelines',
-    icon: Workflow,
-    summary: 'Run self-hosted CI runners and build agents with the CPU and disk your builds actually need.',
+    id: 'travel',
+    title: 'Travel',
+    icon: Plane,
+    summary: 'Use unfamiliar networks abroad with an encrypted connection back to a server you choose.',
     details: [
-      'Self-hosted GitHub Actions or GitLab runners',
-      'Cache dependencies on fast local storage',
-      'Avoid per-minute hosted CI limits',
+      'Protection on hotel and conference Wi-Fi',
+      'Connect through a server location that suits you, where available',
+      'Check local laws — VPN use is restricted in some countries',
     ],
-    stack: ['GitHub Actions runner', 'GitLab Runner', 'Jenkins', 'Drone'],
-    workload: 'development-testing',
-  },
-  {
-    id: 'api-services',
-    title: 'API services',
-    icon: Network,
-    summary: 'Expose REST, GraphQL, or webhook endpoints from a stable public IP address you control.',
-    details: [
-      'Terminate TLS and rate-limit at your own reverse proxy',
-      'Allow-list partner IP addresses',
-      'Log and monitor every request',
-    ],
-    stack: ['REST', 'GraphQL', 'Webhooks', 'Caddy'],
-    workload: 'api-services',
-  },
-  {
-    id: 'containers',
-    title: 'Containerized applications',
-    icon: Blocks,
-    summary: 'Run Docker Compose stacks or lightweight Kubernetes distributions on a single server or a small cluster.',
-    details: [
-      'Deploy multi-service apps with Docker Compose',
-      'Run k3s or MicroK8s for small clusters',
-      'Keep images close to where they run',
-    ],
-    stack: ['Docker', 'Podman', 'k3s', 'Portainer'],
-    workload: 'containers',
+    useCase: 'travel',
     image: 'serverBaysTeal',
+  },
+  {
+    id: 'team-access',
+    title: 'Secure team access',
+    icon: Users,
+    summary: 'Give a small team a shared, encrypted way to connect, managed by one administrator.',
+    details: [
+      'Add and remove people as the team changes',
+      'Seat-based plans sized to your organization',
+      'Requirements discussed and confirmed with WHOLNEX in writing',
+    ],
+    useCase: 'team-access',
+  },
+  {
+    id: 'home',
+    title: 'Home connections',
+    icon: Home,
+    summary: 'Add a layer of privacy to your household’s everyday browsing on Windows PCs.',
+    details: [
+      'Encrypts traffic leaving your PC before it reaches your router and provider',
+      'Easy to turn on and off from the app',
+      'Choose a plan by the number of devices you need',
+    ],
+    useCase: 'online-privacy',
   },
 ];
 
@@ -168,20 +98,20 @@ export const USE_CASES: UseCase[] = [
 
 export const GETTING_STARTED_STEPS = [
   {
-    title: 'Choose a starting point',
-    description: 'Pick the plan tier closest to your workload, or describe a custom configuration.',
+    title: 'Download the app',
+    description: 'Get the WHOLNEX VPN installer for Windows from the download page.',
   },
   {
-    title: 'Send your requirements',
-    description: 'Tell us your preferred OS, resources, region, and timeline in the configuration form.',
+    title: 'Install it',
+    description: 'Run the installer and follow the prompts. Windows may ask permission to add a network driver.',
   },
   {
-    title: 'Review a written quote',
-    description: 'WHOLNEX replies with the specifications, pricing, and availability it can confirm for you.',
+    title: 'Choose a plan',
+    description: 'Pick the plan that fits you or your team. WHOLNEX confirms plan details and pricing with you.',
   },
   {
-    title: 'Get your server',
-    description: 'Once you approve the quote, we coordinate provisioning and send your access details.',
+    title: 'Connect',
+    description: 'Open the app and connect. While connected, your traffic travels through an encrypted tunnel.',
   },
 ];
 
@@ -201,100 +131,95 @@ export interface FaqGroup {
 export const FAQ_GROUPS: FaqGroup[] = [
   {
     id: 'basics',
-    title: 'VPS basics',
+    title: 'VPN basics',
     items: [
       {
-        question: 'What is a VPS?',
+        question: 'What is a VPN?',
         answer:
-          'A virtual private server (VPS) is a virtual machine running on a physical server alongside other virtual machines. Each VPS has its own operating system, its own allocation of CPU, memory, and storage, and its own administrator access, so it behaves like a dedicated server at a fraction of the cost.',
+          'A virtual private network (VPN) creates an encrypted connection — often called a tunnel — between your device and a VPN server. Your internet traffic travels through that tunnel, so networks along the way, such as public Wi-Fi or your internet provider, cannot read its contents, and websites see the VPN server’s IP address instead of yours.',
       },
       {
-        question: 'What can I host on a VPS?',
+        question: 'What does a VPN protect me from?',
         answer:
-          'Almost anything that runs on a server: websites and CMS platforms, web applications and APIs, databases, development and staging environments, self-hosted tools such as Git or file sync, CI runners, game or voice servers, and containerized applications.',
+          'A VPN protects data in transit between your device and the VPN server. It helps on untrusted networks like public Wi-Fi, hides the sites you visit from your internet provider, and masks your IP address from the websites you visit.',
       },
       {
-        question: 'How does VPS hosting compare to shared hosting?',
+        question: 'What does a VPN not protect me from?',
         answer:
-          'Shared hosting places many customers inside one operating system with a fixed software stack and pooled resources, so one busy site can slow the others. A VPS gives you a guaranteed resource allocation, an isolated operating system, and full control over the software you install. The trade-off is that you — or a provider service you arrange — are responsible for administering it.',
+          'A VPN does not make you anonymous and is not antivirus. It does not stop phishing, malware you download, weak passwords, or tracking by websites you sign in to. It also does not protect anything once traffic leaves the VPN server for the wider internet — HTTPS still matters. Our Security page explains this in detail.',
       },
       {
-        question: 'What is root access?',
+        question: 'Is using a VPN legal?',
         answer:
-          'Root (Linux) or Administrator (Windows) access is full control of the operating system. You can install any software, change system configuration, manage users, and open or close network ports. It is powerful, which is why securing that access with SSH keys and strong credentials matters.',
-      },
-      {
-        question: 'Which operating systems can be installed?',
-        answer:
-          'VPS servers commonly run Linux distributions such as Ubuntu Server, Debian, Rocky Linux, and AlmaLinux, and some run Windows Server. The images available for your WHOLNEX server are confirmed in your quote. Windows Server requires Microsoft licensing, which is discussed separately and is not included by default.',
+          'Using a VPN is legal in the United States and most countries, but some countries restrict or ban VPN use. Check the laws where you are, and never use a VPN for illegal activity — see our Acceptable Use Policy.',
       },
     ],
   },
   {
-    id: 'choosing',
-    title: 'Choosing and growing a server',
+    id: 'app',
+    title: 'The WHOLNEX app',
     items: [
       {
-        question: 'How do I choose CPU and RAM?',
+        question: 'Which devices are supported?',
         answer:
-          'Start from the workload. A single small website often runs comfortably with 1–2 vCPU and 1–2 GB of memory. Applications with databases, background workers, or many concurrent users typically need 2–4 vCPU and 4–8 GB or more. Memory is usually the first constraint — if your server swaps to disk, add RAM before CPU. Describe your workload in the configuration form and WHOLNEX will recommend a starting size.',
+          'The WHOLNEX VPN app is currently available for Windows. Other platforms are not yet available; if you need one, let us know through the contact form so we can tell you when that changes.',
       },
       {
-        question: 'What is the difference between shared and dedicated vCPU?',
+        question: 'How do I install the app?',
         answer:
-          'With shared vCPU, virtual CPU time is scheduled across several virtual machines on the same host — cost-effective for bursty workloads like websites. Dedicated vCPU reserves physical CPU threads for one server, giving consistent performance for sustained, CPU-heavy work. Which CPU models WHOLNEX offers is confirmed during quoting.',
+          'Download the installer from the Download page, run it, and follow the prompts. Installing a VPN usually requires administrator rights because it adds a network driver to Windows. You can compare the file’s SHA-256 checksum with the one on the Download page to confirm it was not altered.',
       },
       {
-        question: 'Is a VPS suitable for business applications?',
+        question: 'Will a VPN slow down my connection?',
         answer:
-          'Yes, provided it is sized and operated appropriately. Many businesses run line-of-business software, customer portals, and internal tools on VPS servers. For critical systems, plan for backups, monitoring, security patching, and — where needed — redundancy across more than one server.',
-      },
-      {
-        question: 'Can I upgrade my resources later?',
-        answer:
-          'VPS resources can generally be increased as a workload grows, although disk downsizing is usually not possible. The specific upgrade options for your WHOLNEX server, and how upgrades are billed, are confirmed in your quote.',
+          'Encryption and the extra distance to a VPN server add some overhead, so speeds can be somewhat lower than without a VPN. Connecting to a nearby server usually gives the best results. Actual speeds depend on your connection and the server you use.',
       },
     ],
   },
   {
-    id: 'security',
-    title: 'Security & data protection',
+    id: 'privacy',
+    title: 'Privacy & security',
     items: [
       {
-        question: 'How does VPS security work?',
+        question: 'Does WHOLNEX keep logs?',
         answer:
-          'Security on a VPS is shared. The hosting provider is responsible for the physical facility, the host hardware, and the virtualization layer that isolates customers. The customer is responsible for everything inside the server: operating system updates, user accounts, SSH keys, firewall rules, application security, and backups of their own data. Our Security page explains each layer in detail.',
+          'What WHOLNEX collects and retains about VPN connections will be stated in the WHOLNEX Privacy Policy. Until that policy is published, contact us with any questions — we will not make privacy claims on this website that are not written into our policies.',
       },
       {
-        question: 'What are backups and snapshots?',
+        question: 'Which VPN protocols and encryption are used?',
         answer:
-          'A snapshot is a point-in-time image of a server’s disk, typically taken before an upgrade so you can roll back. A backup is a recurring copy of your data stored separately from the server so it survives hardware failure or accidental deletion. Snapshots are not a substitute for backups. Backup and snapshot options for your WHOLNEX server are confirmed in your quote; we always recommend keeping your own off-server copies of critical data as well.',
+          'Modern VPNs typically use protocols such as WireGuard, OpenVPN, or IKEv2 with strong, widely reviewed encryption. The specific protocols used by the WHOLNEX app will be published on our Network page once confirmed.',
+      },
+      {
+        question: 'What is a kill switch?',
+        answer:
+          'A kill switch blocks internet traffic if the VPN connection drops unexpectedly, so nothing is sent outside the encrypted tunnel by accident. Our Security page lists which protections are included in the WHOLNEX app once they are confirmed.',
       },
     ],
   },
   {
     id: 'billing-support',
-    title: 'Billing & support',
+    title: 'Plans, billing & support',
     items: [
       {
-        question: 'How does billing work?',
+        question: 'How much does WHOLNEX VPN cost?',
         answer:
-          'WHOLNEX currently provides VPS pricing by written quote. Your quote states the price, billing period, and payment terms for your configuration before anything is provisioned. Nothing on this website creates a purchase or a charge.',
+          'WHOLNEX has not yet published plan prices on this website. Choose a plan on the Pricing page to request details, and WHOLNEX will confirm the price and billing period with you in writing. Nothing on this website creates a purchase or a charge.',
       },
       {
-        question: 'Why is pricing quoted instead of listed?',
+        question: 'Do you offer plans for teams and businesses?',
         answer:
-          'WHOLNEX publishes prices only once they are final. Until then, each quote reflects the exact configuration, region, and term you request, so you see confirmed numbers rather than estimates.',
+          'Yes — the Team and Business tiers are designed for organizations. Tell us how many users you have and which devices they use, and WHOLNEX will reply with the plan details it can confirm.',
       },
       {
-        question: 'What support is included?',
+        question: 'Can I get a refund?',
         answer:
-          'The scope of support — what WHOLNEX will help with, how to reach the team, and expected response times — is defined in your quote and service terms. For questions today, use the contact form and choose “Technical support”.',
+          'Refund and cancellation terms will be set out in the WHOLNEX Refund Policy. Until it is published, ask our sales team before you subscribe.',
       },
       {
-        question: 'What is the difference between managed and unmanaged VPS?',
+        question: 'How do I get help?',
         answer:
-          'With an unmanaged (self-managed) VPS, the provider keeps the infrastructure running and you administer the operating system and software. A managed VPS adds provider help with tasks such as patching, monitoring, and troubleshooting. Your WHOLNEX quote states whether any management services are included; if it does not list them, plan to administer the server yourself.',
+          'Use the contact form and choose “Technical support”. Include your Windows version and what you see on screen, and the team will reply by email.',
       },
     ],
   },
@@ -304,11 +229,11 @@ export const ALL_FAQS: FaqItem[] = FAQ_GROUPS.flatMap((group) => group.items);
 
 /** Selected questions shown on the homepage. */
 export const HOME_FAQS: FaqItem[] = [
-  'What is a VPS?',
-  'How does VPS hosting compare to shared hosting?',
-  'How do I choose CPU and RAM?',
-  'How does billing work?',
-  'How does VPS security work?',
+  'What is a VPN?',
+  'What does a VPN not protect me from?',
+  'Which devices are supported?',
+  'Does WHOLNEX keep logs?',
+  'How much does WHOLNEX VPN cost?',
 ].map((q) => ALL_FAQS.find((item) => item.question === q)!);
 
 export const BILLING_FAQS: FaqItem[] = FAQ_GROUPS.find((group) => group.id === 'billing-support')!.items;

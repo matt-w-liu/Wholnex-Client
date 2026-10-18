@@ -31,7 +31,7 @@ export function CookiesPage() {
 
       <h2>Optional storage</h2>
       <p>
-        If you use the security hardening checklist, your progress is saved in local storage on your device only. It is
+        If you use the stay-safe checklist on the Security page, your progress is saved in local storage on your device only. It is
         never sent to WHOLNEX.
       </p>
 

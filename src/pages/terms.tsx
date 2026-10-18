@@ -11,16 +11,15 @@ export function TermsPage() {
     <LegalDocument id="terms">
       <h2>1. Agreement</h2>
       <p>
-        These Terms of Service govern your use of the website at {COMPANY.url} and any virtual private server (VPS)
-        hosting services provided by {COMPANY.name}, {COMPANY_ADDRESS_LINE} (“WHOLNEX”). By using the website or the
-        services you agree to these terms.
+        These Terms of Service govern your use of the website at {COMPANY.url}, the WHOLNEX VPN app, and the virtual
+        private network (VPN) services provided by {COMPANY.name}, {COMPANY_ADDRESS_LINE} (“WHOLNEX”). By using the
+        website, the app, or the services you agree to these terms.
       </p>
 
-      <h2>2. Quotes and orders</h2>
+      <h2>2. Plans and subscriptions</h2>
       <p>
-        Information on this website, including plan tiers, is descriptive and is not an offer. Services are provided
-        only under a written quote accepted by both you and WHOLNEX. The quote specifies the configuration, price,
-        billing period, and any included services, and takes precedence over general website content.
+        Information on this website, including plan tiers, is descriptive and is not an offer. [TO BE CONFIRMED: how
+        subscriptions are purchased, what each plan includes, and how plan terms are confirmed to the customer.]
       </p>
 
       <h2>3. Accounts</h2>
@@ -30,15 +29,17 @@ export function TermsPage() {
       </p>
 
       <h2>4. Your responsibilities</h2>
+      <p>A VPN does not make unlawful activity lawful. You are responsible for how you use the service, including:</p>
       <ul>
-        <li>Administering and securing the operating system and software on your server unless your quote states otherwise.</li>
-        <li>Maintaining your own backups of data you consider important.</li>
+        <li>Keeping your device, operating system, and the WHOLNEX app up to date.</li>
+        <li>Keeping your account credentials confidential and not sharing your account beyond your plan’s limits.</li>
+        <li>Complying with the laws of the country you are in, including any restrictions on VPN use.</li>
         <li>Complying with the <Link to="/acceptable-use">Acceptable Use Policy</Link> and all applicable laws.</li>
       </ul>
 
       <h2>5. Fees and payment</h2>
       <p>
-        Fees, billing frequency, and payment methods are set out in your quote. [TO BE CONFIRMED: late payment, taxes,
+        Fees, billing frequency, and payment methods: [TO BE CONFIRMED]. [TO BE CONFIRMED: late payment, taxes,
         and price change terms.] Refunds are governed by the <Link to="/refund-policy">Refund Policy</Link>.
       </p>
 
@@ -51,9 +52,12 @@ export function TermsPage() {
 
       <h2>7. Service availability</h2>
       <p>
-        WHOLNEX does not currently publish a service level agreement. Any availability commitment applies only if it
-        is stated in your quote.
+        WHOLNEX does not currently publish a service level agreement. VPN connections can be affected by your network,
+        local restrictions, and server availability. [TO BE CONFIRMED: any availability commitments.]
       </p>
+
+      <h2>7a. The WHOLNEX app</h2>
+      <p>[TO BE CONFIRMED BY COUNSEL: software license grant, restrictions on reverse engineering, and automatic updates.]</p>
 
       <h2>8. Disclaimers and limitation of liability</h2>
       <p>[TO BE CONFIRMED BY COUNSEL: warranty disclaimer, limitation of liability, and indemnification.]</p>

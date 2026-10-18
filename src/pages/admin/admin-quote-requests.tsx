@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  MANAGEMENT_PREFERENCE_LABELS,
-  OPERATING_SYSTEM_PREFERENCE_LABELS,
+  DEVICE_PLATFORM_LABELS,
   QUOTE_PLAN_INTEREST_LABELS,
   QUOTE_TIMELINE_LABELS,
-  VPS_WORKLOAD_LABELS,
+  VPN_USE_CASE_LABELS,
   requestStatuses,
   type RequestStatus,
 } from '@wholnex/shared';
-import { ServerCog } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { apiGet, apiPatch, getErrorMessage } from '@/lib/api';
 import type { Paginated, QuoteRequest } from '@/lib/types';
@@ -32,15 +31,6 @@ const STATUS_VARIANT: Record<RequestStatus, 'secondary' | 'success' | 'warning' 
   resolved: 'success',
   archived: 'outline',
 };
-
-function resources(request: QuoteRequest): string {
-  const parts = [
-    request.vcpu ? `${request.vcpu} vCPU` : null,
-    request.memoryGb ? `${request.memoryGb} GB RAM` : null,
-    request.storageGb ? `${request.storageGb} GB disk` : null,
-  ].filter(Boolean);
-  return parts.length > 0 ? parts.join(' · ') : 'Not specified';
-}
 
 export function AdminQuoteRequestsPage() {
   const [search, setSearch] = useState('');
@@ -65,7 +55,7 @@ export function AdminQuoteRequestsPage() {
         internalNotes: input.internalNotes,
       }),
     onSuccess: ({ request }) => {
-      toast.success('Quote request updated');
+      toast.success('Plan request updated');
       queryClient.invalidateQueries({ queryKey: ['admin', 'quote-requests'] });
       setSelected(request);
     },
@@ -80,10 +70,10 @@ export function AdminQuoteRequestsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-semibold">Quote requests</h1>
+        <h1 className="font-display text-2xl font-semibold">Plan requests</h1>
         <p className="text-sm text-muted-foreground">
-          VPS configuration requests submitted through the website configurator. Reply to each requester with a
-          written quote.
+          VPN plan requests submitted through the website. Reply to each requester with the plan details and
+          pricing WHOLNEX can confirm.
         </p>
       </div>
 
@@ -93,7 +83,7 @@ export function AdminQuoteRequestsPage() {
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Search by name, email, or company…"
           className="max-w-sm"
-          aria-label="Search quote requests"
+          aria-label="Search plan requests"
         />
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-44" aria-label="Filter by status">
@@ -111,18 +101,18 @@ export function AdminQuoteRequestsPage() {
       </div>
 
       {isLoading ? (
-        <LoadingState label="Loading quote requests…" />
+        <LoadingState label="Loading plan requests…" />
       ) : isError ? (
         <ErrorState onRetry={() => refetch()} />
       ) : !data || data.items.length === 0 ? (
-        <EmptyState icon={ServerCog} title="No quote requests found" />
+        <EmptyState icon={ShieldCheck} title="No plan requests found" />
       ) : (
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>From</TableHead>
               <TableHead>Plan</TableHead>
-              <TableHead>Workload</TableHead>
+              <TableHead>Use</TableHead>
               <TableHead>Received</TableHead>
               <TableHead>Status</TableHead>
               <TableHead />
@@ -136,7 +126,7 @@ export function AdminQuoteRequestsPage() {
                   <p className="text-xs text-muted-foreground">{request.companyName || request.email}</p>
                 </TableCell>
                 <TableCell>{QUOTE_PLAN_INTEREST_LABELS[request.planInterest]}</TableCell>
-                <TableCell className="text-sm text-muted-foreground">{VPS_WORKLOAD_LABELS[request.workload]}</TableCell>
+                <TableCell className="text-sm text-muted-foreground">{VPN_USE_CASE_LABELS[request.useCase]}</TableCell>
                 <TableCell className="text-sm text-muted-foreground">{formatDate(request.createdAt)}</TableCell>
                 <TableCell>
                   <Badge variant={STATUS_VARIANT[request.status]} className="capitalize">
@@ -173,17 +163,13 @@ export function AdminQuoteRequestsPage() {
                     <dd>{selected.companyName}</dd>
                   </>
                 )}
-                <dt className="font-medium">Workload</dt>
-                <dd>{VPS_WORKLOAD_LABELS[selected.workload]}</dd>
-                <dt className="font-medium">Operating system</dt>
-                <dd>{OPERATING_SYSTEM_PREFERENCE_LABELS[selected.operatingSystem]}</dd>
-                <dt className="font-medium">Resources</dt>
-                <dd>{resources(selected)}</dd>
-                <dt className="font-medium">Servers</dt>
-                <dd>{selected.quantity}</dd>
-                <dt className="font-medium">Management</dt>
-                <dd>{MANAGEMENT_PREFERENCE_LABELS[selected.managementPreference]}</dd>
-                <dt className="font-medium">Region</dt>
+                <dt className="font-medium">Primary use</dt>
+                <dd>{VPN_USE_CASE_LABELS[selected.useCase]}</dd>
+                <dt className="font-medium">Devices</dt>
+                <dd>{selected.platforms.map((p) => DEVICE_PLATFORM_LABELS[p]).join(', ') || 'Not specified'}</dd>
+                <dt className="font-medium">Users</dt>
+                <dd>{selected.users}</dd>
+                <dt className="font-medium">Server locations</dt>
                 <dd>{selected.regionPreference || 'Not specified'}</dd>
                 <dt className="font-medium">Timeline</dt>
                 <dd>{selected.timeline ? QUOTE_TIMELINE_LABELS[selected.timeline] : 'Not specified'}</dd>

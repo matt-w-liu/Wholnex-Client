@@ -9,12 +9,12 @@ export function RefundPolicyPage() {
   return (
     <LegalDocument id="refund-policy">
       <h2>Scope</h2>
-      <p>This policy will describe how cancellations and refunds work for WHOLNEX VPS services.</p>
+      <p>This policy will describe how cancellations and refunds work for WHOLNEX VPN subscriptions.</p>
 
       <h2>Before you are billed</h2>
       <p>
-        Quotes are free and non-binding. Submitting a contact message or configuration request does not create an
-        order or a charge.
+        Plan requests are free and non-binding. Submitting a contact message or plan request does not create an order
+        or a charge, and downloading the app does not start a subscription.
       </p>
 
       <h2>Cancellations</h2>

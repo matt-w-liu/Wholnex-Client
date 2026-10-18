@@ -7,14 +7,14 @@ export const CONTACT_REASON_LABELS_MAP = CONTACT_REASON_LABELS;
 export const CONTACT_REASON_OPTIONS: { value: ContactReason; label: string; description: string }[] = [
   { value: 'sales', label: CONTACT_REASON_LABELS.sales, description: 'Plans, pricing, and quotes' },
   {
-    value: 'vps-configuration',
-    label: CONTACT_REASON_LABELS['vps-configuration'],
-    description: 'Sizing, operating systems, and custom builds',
+    value: 'business-vpn',
+    label: CONTACT_REASON_LABELS['business-vpn'],
+    description: 'Seats, server locations, and team setup',
   },
   {
     value: 'technical-support',
     label: CONTACT_REASON_LABELS['technical-support'],
-    description: 'Help with an existing service',
+    description: 'Help with the app or a connection',
   },
   { value: 'general', label: CONTACT_REASON_LABELS.general, description: 'Anything else' },
 ];

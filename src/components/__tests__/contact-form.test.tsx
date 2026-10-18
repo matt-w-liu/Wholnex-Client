@@ -24,17 +24,17 @@ describe('ContactForm', () => {
 
     const group = screen.getByRole('radiogroup', { name: /inquiry category/i });
     expect(group).toBeInTheDocument();
-    for (const name of [/sales inquiry/i, /vps configuration inquiry/i, /technical support/i, /general inquiry/i]) {
+    for (const name of [/sales inquiry/i, /team vpn inquiry/i, /technical support/i, /general inquiry/i]) {
       expect(screen.getByRole('radio', { name })).toBeInTheDocument();
     }
     expect(screen.getByRole('radio', { name: /technical support/i })).toHaveAttribute('aria-checked', 'true');
   });
 
   it('includes an optional company field and prefills the subject', () => {
-    render(<ContactForm defaultSubject="Question about Standard VPS" />);
+    render(<ContactForm defaultSubject="Question about Plus VPN" />);
 
     expect(screen.getByLabelText(/company \(optional\)/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/^subject$/i)).toHaveValue('Question about Standard VPS');
+    expect(screen.getByLabelText(/^subject$/i)).toHaveValue('Question about Plus VPN');
   });
 
   it('renders a visually hidden honeypot field that is empty by default', () => {

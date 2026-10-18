@@ -11,8 +11,8 @@ export function AcceptableUsePage() {
     <LegalDocument id="acceptable-use">
       <h2>Purpose</h2>
       <p>
-        This Acceptable Use Policy describes activities that are not permitted on {COMPANY.name} virtual private servers,
-        networks, and related services. It protects our customers, our infrastructure, and the wider internet.
+        This Acceptable Use Policy describes activities that are not permitted when using the {COMPANY.name} VPN app,
+        VPN servers, and related services. It protects our customers, our network, and the wider internet.
       </p>
 
       <h2>Prohibited activities</h2>
@@ -20,30 +20,30 @@ export function AcceptableUsePage() {
       <ul>
         <li>Violate any applicable law or regulation, or facilitate others in doing so.</li>
         <li>Host, store, or distribute child sexual abuse material. Such material will be reported to authorities.</li>
-        <li>Send unsolicited bulk email or operate infrastructure for spam.</li>
-        <li>Distribute malware, operate botnets or command-and-control servers, or host phishing pages.</li>
+        <li>Send spam or unsolicited bulk messages through the VPN.</li>
+        <li>Distribute malware, control botnets, or carry out phishing or fraud.</li>
         <li>Launch denial-of-service attacks or scan, probe, or access systems without authorization.</li>
-        <li>Infringe intellectual property rights, including hosting pirated software or media.</li>
-        <li>Operate open proxies, open mail relays, or other services that can be abused by third parties.</li>
-        <li>Interfere with other customers’ services or attempt to break virtual machine isolation.</li>
+        <li>Infringe intellectual property rights, including distributing pirated software or media.</li>
+        <li>Resell, share, or redistribute VPN access beyond what your plan allows.</li>
+        <li>Interfere with, overload, or attempt to gain unauthorized access to WHOLNEX servers or other users.</li>
       </ul>
-      <p>[TO BE CONFIRMED: policy on cryptocurrency mining, game servers, Tor exit nodes, and VPN services.]</p>
+      <p>[TO BE CONFIRMED: policy on peer-to-peer file sharing, port forwarding, and automated or bulk traffic.]</p>
 
-      <h2>Resource usage</h2>
+      <h2>Fair use</h2>
       <p>
-        Use resources in line with your configuration. Sustained use that degrades other customers’ services may be
-        limited. [TO BE CONFIRMED: specific fair-use thresholds.]
+        Use the service in line with your plan. Sustained use that degrades the service for other customers may be
+        limited. [TO BE CONFIRMED: specific fair-use thresholds, if any.]
       </p>
 
-      <h2>Security responsibilities</h2>
+      <h2>Your device</h2>
       <p>
-        You must take reasonable steps to secure your server. A compromised server used for abuse may be isolated until
-        it is cleaned. See our <Link to="/security">security guide</Link>.
+        Keep your device secure. Access from a compromised device used for abuse may be suspended until the problem is
+        resolved. See our <Link to="/security">security guide</Link>.
       </p>
 
       <h2>Reporting abuse</h2>
       <p>
-        To report abuse originating from WHOLNEX services, <Link to="/contact?category=technical-support">contact us</Link>{' '}
+        To report abuse originating from WHOLNEX VPN servers, <Link to="/contact?category=technical-support">contact us</Link>{' '}
         with as much detail as possible, including IP addresses, timestamps, and logs.
       </p>
 

@@ -4,19 +4,19 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 
-const STORAGE_KEY = 'wholnex-hardening-checklist';
+const STORAGE_KEY = 'wholnex-privacy-checklist';
 
 const ITEMS = [
-  { id: 'updates', label: 'Apply all operating system updates' },
-  { id: 'user', label: 'Create a non-root user with sudo privileges' },
-  { id: 'ssh-keys', label: 'Install your SSH public key for that user' },
-  { id: 'no-passwords', label: 'Disable SSH password authentication' },
-  { id: 'no-root', label: 'Disable direct root login over SSH' },
-  { id: 'firewall', label: 'Enable a firewall that allows only required ports' },
-  { id: 'auto-updates', label: 'Turn on automatic security updates' },
-  { id: 'fail2ban', label: 'Add brute-force protection (e.g. fail2ban)' },
-  { id: 'backups', label: 'Schedule off-server backups and test a restore' },
-  { id: 'monitoring', label: 'Set up resource and uptime monitoring' },
+  { id: 'verify-installer', label: 'Verify the installer checksum before installing' },
+  { id: 'os-updates', label: 'Keep Windows and your browser up to date' },
+  { id: 'app-updates', label: 'Install WHOLNEX app updates when offered' },
+  { id: 'connect-public', label: 'Connect the VPN before using public Wi-Fi' },
+  { id: 'https', label: 'Check for HTTPS on sites where you sign in or pay' },
+  { id: 'passwords', label: 'Use a password manager and unique passwords' },
+  { id: 'mfa', label: 'Turn on two-factor authentication for key accounts' },
+  { id: 'phishing', label: 'Be wary of unexpected links and attachments' },
+  { id: 'antivirus', label: 'Keep Microsoft Defender or other antivirus active' },
+  { id: 'dns-check', label: 'Run a DNS leak test while connected' },
 ];
 
 function readStored(): string[] {
@@ -30,10 +30,10 @@ function readStored(): string[] {
 }
 
 /**
- * A practical first-day hardening checklist. Progress is saved only in this browser
+ * A practical online-safety checklist. Progress is saved only in this browser
  * (localStorage) as a convenience — nothing is sent to WHOLNEX.
  */
-export function HardeningChecklist() {
+export function PrivacyChecklist() {
   const [done, setDone] = useState<string[]>(() => (typeof window === 'undefined' ? [] : readStored()));
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export function HardeningChecklist() {
     <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h3 className="font-display text-xl font-semibold">First-day hardening checklist</h3>
+          <h3 className="font-display text-xl font-semibold">Stay-safe checklist</h3>
           <p className="mt-1 text-sm text-muted-foreground">Track your progress — saved only in this browser.</p>
         </div>
         <Button variant="ghost" size="sm" onClick={() => setDone([])} disabled={done.length === 0}>
@@ -72,11 +72,11 @@ export function HardeningChecklist() {
           return (
             <li key={item.id}>
               <label
-                htmlFor={`harden-${item.id}`}
+                htmlFor={`safety-${item.id}`}
                 className="flex cursor-pointer items-start gap-3 rounded-lg border border-border p-3 text-sm transition-colors hover:border-brand/40 has-[[data-state=checked]]:border-brand/40 has-[[data-state=checked]]:bg-brand/5"
               >
                 <Checkbox
-                  id={`harden-${item.id}`}
+                  id={`safety-${item.id}`}
                   checked={checked}
                   onCheckedChange={(value) => toggle(item.id, value === true)}
                   className="mt-0.5"

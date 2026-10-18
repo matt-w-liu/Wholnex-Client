@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check, FlaskConical } from 'lucide-react';
-import type { ResolvedPlan } from '@/lib/vps-plans';
-import { SPEC_ROWS } from '@/lib/vps-plans';
+import type { ResolvedPlan } from '@/lib/vpn-plans';
+import { FEATURE_ROWS } from '@/lib/vpn-plans';
 import { formatCurrency, cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -17,7 +17,7 @@ interface PlanCardProps {
 
 export function TierMeter({ tier, label }: { tier: number; label: string }) {
   return (
-    <div className="flex items-center gap-2" aria-label={`Relative resource tier: ${label}`} role="img">
+    <div className="flex items-center gap-2" aria-label={`Plan tier: ${label}`} role="img">
       <div className="flex gap-1" aria-hidden="true">
         {[1, 2, 3, 4].map((level) => (
           <span
@@ -67,30 +67,34 @@ export function PlanCard({ plan, billing = 'monthly', variant = 'full' }: PlanCa
         {price !== null && price !== undefined ? (
           <p>
             <span className="font-display text-4xl font-semibold tracking-tight">{formatCurrency(price)}</span>
-            <span className="text-sm text-muted-foreground"> /month{billing === 'annual' ? ', billed annually' : ''}</span>
+            <span className="text-sm text-muted-foreground">
+              {' '}
+              /month{plan.pricing?.unit ? ` ${plan.pricing.unit}` : ''}
+              {billing === 'annual' ? ', billed annually' : ''}
+            </span>
           </p>
         ) : (
           <div>
-            <p className="font-display text-2xl font-semibold tracking-tight">Pricing by quote</p>
-            <p className="mt-1 text-sm text-muted-foreground">Specs and price confirmed in writing.</p>
+            <p className="font-display text-2xl font-semibold tracking-tight">Pricing on request</p>
+            <p className="mt-1 text-sm text-muted-foreground">Plan details and price confirmed in writing.</p>
           </div>
         )}
       </div>
 
       {variant === 'full' && <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{plan.summary}</p>}
 
-      {plan.specs ? (
+      {plan.features ? (
         <dl className="mt-5 space-y-2.5 text-sm">
-          {SPEC_ROWS.map((row) => (
+          {FEATURE_ROWS.map((row) => (
             <div key={row.key} className="flex items-start justify-between gap-4">
               <dt className="text-muted-foreground">{row.label}</dt>
-              <dd className="text-right font-medium">{row.value(plan.specs!)}</dd>
+              <dd className="text-right font-medium">{row.value(plan.features!)}</dd>
             </div>
           ))}
         </dl>
       ) : (
         <div className="mt-5">
-          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Typical fit</p>
+          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Good for</p>
           <ul className="mt-3 space-y-2.5 text-sm">
             {plan.idealFor.map((item) => (
               <li key={item} className="flex items-start gap-2.5">
@@ -104,8 +108,8 @@ export function PlanCard({ plan, billing = 'monthly', variant = 'full' }: PlanCa
 
       <div className="mt-auto flex flex-col gap-2 pt-8">
         <Button asChild variant={plan.highlighted ? 'default' : 'outline'} className="w-full">
-          <Link to={`/quote?plan=${plan.id}`} aria-label={`Request a quote for ${plan.name}`}>
-            Request a quote <ArrowRight aria-hidden="true" />
+          <Link to={`/quote?plan=${plan.id}`} aria-label={`Request ${plan.name}`}>
+            {plan.audience === 'team' ? 'Request a quote' : 'Request this plan'} <ArrowRight aria-hidden="true" />
           </Link>
         </Button>
         {variant === 'full' && (

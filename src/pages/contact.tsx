@@ -1,11 +1,11 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowRight, Building2, ExternalLink, Mail, MapPin, ServerCog, UserRound } from 'lucide-react';
+import { ArrowRight, Building2, ExternalLink, Mail, MapPin, UserRound, Users } from 'lucide-react';
 import { contactReasons, type ContactReason } from '@wholnex/shared';
 import { Seo } from '@/components/seo';
 import { PageHero } from '@/components/page-hero';
 import { ContactForm } from '@/components/contact-form';
 import { COMPANY, COMPANY_ADDRESS_LINES, COMPANY_MAP_URL } from '@/lib/constants';
-import { getPlanById } from '@/lib/vps-plans';
+import { getPlanById } from '@/lib/vpn-plans';
 import { Button } from '@/components/ui/button';
 
 function parseReason(value: string | null): ContactReason | undefined {
@@ -21,8 +21,8 @@ export function ContactPage() {
   return (
     <>
       <Seo
-        title="Contact WHOLNEX — Sales, Support & VPS Inquiries"
-        description="Contact WHOLNEX LLC about VPS plans, custom server configurations, technical support, or general questions. Business address: 1333 County Road 565, Van Buren, MO 63965."
+        title="Contact WHOLNEX — Sales, Support & VPN Inquiries"
+        description="Contact WHOLNEX LLC about VPN plans, team and business VPN, app support, or general questions. Business address: 1333 County Road 565, Van Buren, MO 63965."
         path="/contact"
       />
 
@@ -31,7 +31,7 @@ export function ContactPage() {
         eyebrow="Contact"
         breadcrumbs={[{ name: 'Contact', path: '/contact' }]}
         title="Talk to the WHOLNEX team"
-        description="Questions about plans, configurations, or an existing service? Send a message and we will reply by email."
+        description="Questions about plans, the app, or a team VPN? Send a message and we will reply by email."
       />
 
       <section className="container-page grid gap-10 py-14 sm:py-20 lg:grid-cols-[1.45fr_1fr]">
@@ -43,17 +43,17 @@ export function ContactPage() {
           <div className="ring-gradient rounded-2xl bg-card p-6">
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10 text-brand">
-                <ServerCog className="h-5 w-5" aria-hidden="true" />
+                <Users className="h-5 w-5" aria-hidden="true" />
               </span>
-              <h2 className="font-display text-lg font-semibold">Planning a server?</h2>
+              <h2 className="font-display text-lg font-semibold">VPN for your team?</h2>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              The VPS configurator collects everything we need for a written quote — resources, operating system,
-              region, and timeline — in one step.
+              The plan request form collects everything we need — number of users, devices, and preferred server
+              locations — in one step.
             </p>
             <Button className="mt-5 w-full" asChild>
-              <Link to="/quote">
-                Configure a VPS <ArrowRight aria-hidden="true" />
+              <Link to="/quote?plan=team">
+                Request a team plan <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
           </div>
@@ -111,7 +111,7 @@ export function ContactPage() {
                 ))}
               </address>
               <p className="mt-3 text-xs text-muted-foreground">
-                This is WHOLNEX’s business address. It is not a data center or server hosting location.
+                This is WHOLNEX’s business address. It is not a VPN server location.
               </p>
               <Button variant="outline" size="sm" className="mt-4" asChild>
                 <a href={COMPANY_MAP_URL} target="_blank" rel="noopener noreferrer">

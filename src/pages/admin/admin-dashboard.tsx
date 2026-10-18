@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Mail, ServerCog, Users } from 'lucide-react';
+import { Mail, ShieldCheck, Users } from 'lucide-react';
 import { apiGet } from '@/lib/api';
 import type { AdminDashboardStats } from '@/lib/types';
 import { CONTACT_REASON_LABELS_MAP } from '@/lib/contact-options';
@@ -21,7 +21,7 @@ export function AdminDashboardPage() {
   if (isError || !data) return <ErrorState onRetry={() => refetch()} />;
 
   const cards = [
-    { label: 'Quote requests', value: data.quoteRequests.total, hint: `${data.quoteRequests.new} new`, icon: ServerCog, href: '/admin/quote-requests' },
+    { label: 'Plan requests', value: data.quoteRequests.total, hint: `${data.quoteRequests.new} new`, icon: ShieldCheck, href: '/admin/quote-requests' },
     { label: 'Contact messages', value: data.contact.total, hint: `${data.contact.new} new`, icon: Mail, href: '/admin/contact' },
     { label: 'Users', value: data.users.total, hint: `${data.users.active} active`, icon: Users, href: '/admin/users' },
   ];

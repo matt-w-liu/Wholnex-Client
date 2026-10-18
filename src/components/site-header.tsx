@@ -161,7 +161,7 @@ export function SiteHeader() {
           )}
 
           <Button size="sm" className="hidden sm:inline-flex" asChild>
-            <Link to="/pricing">View VPS Plans</Link>
+            <Link to="/pricing">View VPN Plans</Link>
           </Button>
 
           <MobileNavigation />
