@@ -5,6 +5,7 @@ import { SkipToContent } from '@/components/skip-to-content';
 import { ScrollManager } from '@/components/scroll-manager';
 import { OrganizationJsonLd, WebsiteJsonLd } from '@/components/seo';
 import { CookieConsentBanner, CookieSettingsDialog } from '@/components/cookie-consent';
+import { ScrollToTopButton } from '@/components/scroll-to-top-button';
 
 export function MainLayout() {
   return (
@@ -18,6 +19,7 @@ export function MainLayout() {
         <Outlet />
       </main>
       <SiteFooter />
+      <ScrollToTopButton />
       <CookieConsentBanner />
       <CookieSettingsDialog />
     </div>
