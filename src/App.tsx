@@ -77,7 +77,7 @@ function AppRoutes() {
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
           <Route path="reset-password" element={<ResetPasswordPage />} />
           <Route path="reset-password/:token" element={<ResetPasswordPage />} />
-          <Route path="privacy" element={<PrivacyPage />} />
+          <Route path="vpn/privacy" element={<PrivacyPage />} />
           <Route path="terms" element={<TermsPage />} />
           <Route path="acceptable-use" element={<AcceptableUsePage />} />
           <Route path="refund-policy" element={<RefundPolicyPage />} />
@@ -87,6 +87,7 @@ function AppRoutes() {
 
           {/* Legacy routes from previous site builds */}
           <Route path="website-terms" element={<Navigate to="/terms" replace />} />
+          <Route path="privacy" element={<Navigate to="/vpn/privacy" replace />} />
           <Route path="vps-hosting" element={<Navigate to="/vpn" replace />} />
           <Route path="infrastructure" element={<Navigate to="/network" replace />} />
 

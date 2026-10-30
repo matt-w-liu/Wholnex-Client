@@ -11,5 +11,6 @@
   <url><loc>https://wholnex.net/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://wholnex.net/faq</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://wholnex.net/contact</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://wholnex.net/vpn/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <!-- Legal pages are added here only after their policies are approved (see src/lib/legal.ts). -->
 </urlset>

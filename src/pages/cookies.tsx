@@ -44,7 +44,7 @@ export function CookiesPage() {
       <h2>Third-party resources</h2>
       <p>
         Fonts are loaded from Google Fonts, which receives your IP address when pages load. See our{' '}
-        <Link to="/privacy">Privacy Policy</Link>.
+        <Link to="/vpn/privacy">Privacy Policy</Link>.
       </p>
     </LegalDocument>
   );

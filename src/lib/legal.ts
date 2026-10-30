@@ -27,9 +27,10 @@ export const LEGAL_DOCUMENTS: Record<LegalDocumentId, LegalDocumentMeta> = {
   privacy: {
     id: 'privacy',
     title: 'Privacy Policy',
-    path: '/privacy',
-    description: 'How WHOLNEX LLC collects, uses, and protects personal information submitted through this website.',
-    status: 'draft',
+    path: '/vpn/privacy',
+    description: 'How FluxShield VPN collects, uses, and protects information when you use our VPN services and website.',
+    status: 'approved',
+    effectiveDate: '2026-10-30',
   },
   terms: {
     id: 'terms',

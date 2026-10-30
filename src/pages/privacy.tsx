@@ -1,107 +1,87 @@
-import { Link } from 'react-router-dom';
-import { COMPANY, COMPANY_ADDRESS_LINE } from '@/lib/constants';
 import { LegalDocument } from '@/components/legal-document';
 
-/**
- * DRAFT — LEGAL REVIEW REQUIRED. Describes the data this website actually collects. Not a binding
- * policy until approved in src/lib/legal.ts. See docs/LEGAL_REVIEW.md.
- */
+const PRIVACY_EMAIL = 'ravindrakuvar@wholnex.net';
+
+/** Privacy Policy text as supplied by WHOLNEX. Publication status lives in src/lib/legal.ts. */
 export function PrivacyPage() {
   return (
     <LegalDocument id="privacy">
-      <h2>Who we are</h2>
       <p>
-        {COMPANY.name} (“WHOLNEX”, “we”, “us”) operates this website at {COMPANY.url}. Our business address is{' '}
-        {COMPANY_ADDRESS_LINE}. For privacy questions or requests, email{' '}
-        <a href={`mailto:${COMPANY.publicEmail}`}>{COMPANY.publicEmail}</a> or use our{' '}
-        <Link to="/contact?category=general">contact form</Link>.
+        At FluxShield VPN, your privacy and security are our top priorities. This Privacy Policy explains how we
+        collect, use, and protect information when you use our VPN services (“Service”) and associated website domains
+        (“Site”).
       </p>
 
-      <h2>Information we collect</h2>
-      <h3>Contact messages</h3>
+      <h2>1. Information We Collect</h2>
       <p>
-        When you use the contact form we collect your name, email address, optional company name, the inquiry category,
-        subject, message, and your consent to be contacted.
+        FluxShield VPN is committed to minimizing the data we process. We do NOT collect or store identifiable personal
+        information, browsing history, DNS queries, IP addresses, or traffic content.
       </p>
-      <h3>VPN plan requests</h3>
       <p>
-        When you request a plan we collect the details you choose (plan, primary use, device platforms, number of users,
-        preferred server locations, timeline, and any requirements you describe) together with your name, email
-        address, and optional company name.
+        To keep the Service running, we may collect non-personal, technical telemetry such as operating system version,
+        device model, manufacturer, app version, language, system country setting, connection timestamps, aggregated
+        data transfer amounts, and anonymous diagnostic or crash information.
       </p>
-      <h3>Accounts</h3>
       <p>
-        If you create an account we store your name, email address, optional phone number, a one-way hash of your
-        password (never the password itself), your role, sign-in timestamps, and security counters used to lock an
-        account after repeated failed sign-in attempts.
-      </p>
-      <h3>Technical information</h3>
-      <p>
-        To limit spam and abuse, we store a one-way hash of the IP address associated with each form submission rather
-        than the IP address itself. Our servers may also keep standard request logs for security and troubleshooting.
+        This information is non-identifiable, used solely for service quality, and cannot be linked back to a specific
+        user or their online behavior.
       </p>
 
-      <h2>Information about your use of the VPN service</h2>
-      <p>
-        This section describes what WHOLNEX collects when you use the WHOLNEX VPN app and network. It must be completed
-        from WHOLNEX’s actual practices before publication.
-      </p>
+      <h2>2. How We Use This Information</h2>
       <ul>
-        <li>Whether the sites you visit, DNS queries, or traffic content are recorded: [TO BE CONFIRMED]</li>
-        <li>Whether your originating IP address is recorded when you connect: [TO BE CONFIRMED]</li>
-        <li>Whether connection timestamps, session duration, or data volume are recorded: [TO BE CONFIRMED]</li>
-        <li>App diagnostics or crash reports, and whether they are optional: [TO BE CONFIRMED]</li>
-        <li>Account and payment data needed to provide a subscription: [TO BE CONFIRMED]</li>
-        <li>How long any of the above is retained, and where it is stored: [TO BE CONFIRMED]</li>
-        <li>How WHOLNEX responds to requests from authorities for user data: [TO BE CONFIRMED]</li>
+        <li>
+          Maintain performance and stability, monitor server capacity, optimize routes, and troubleshoot connection
+          issues.
+        </li>
+        <li>Diagnose crashes or technical problems and inform product improvements.</li>
+        <li>
+          Selected diagnostic signals may be processed by trusted analytics providers strictly for technical analysis.
+          All such data remains anonymous and cannot reveal your identity or online activity.
+        </li>
       </ul>
 
-      <h2>How we use information</h2>
-      <ul>
-        <li>To respond to inquiries and plan requests.</li>
-        <li>To operate customer accounts, including showing your past messages and plan requests.</li>
-        <li>To send transactional emails such as submission confirmations and password resets.</li>
-        <li>To protect the website and our services against fraud, spam, and abuse.</li>
-      </ul>
-      <p>We do not sell personal information, and we do not use it for automated decisions with legal effects.</p>
-
-      <h2>Service providers</h2>
+      <h2>3. Data Security</h2>
       <p>
-        We use infrastructure providers to operate this website, including website and database hosting and an email
-        delivery provider. This website loads fonts from Google Fonts, which means your browser connects to Google
-        servers and shares your IP address with Google when pages load. [TO BE CONFIRMED: list of named providers.]
+        We employ administrative, technical, and physical safeguards to protect the limited telemetry we collect,
+        helping prevent unauthorized access, alteration, or disclosure.
+      </p>
+      <p>
+        No internet transmission is completely secure; despite our best efforts, we cannot guarantee absolute security.
       </p>
 
-      <h2>Browser storage</h2>
+      <h2>4. Third-Party Services</h2>
       <p>
-        We use your browser’s local storage for sign-in tokens, your theme preference, your cookie-consent choice, and
-        optional progress on the security checklist. See our <Link to="/cookies">Cookie Policy</Link>.
+        FluxShield VPN may rely on vetted third parties for analytics, crash reporting, or performance monitoring.
+      </p>
+      <p>
+        These partners receive only anonymized, non-identifiable technical data and must uphold strict data protection
+        standards.
+      </p>
+      <p>
+        We do not sell, share, or disclose personal data, nor provide any information that could expose your browsing
+        history, content, IP address, or behavior.
       </p>
 
-      <h2>Retention</h2>
+      <h2>5. Your Rights</h2>
       <p>
-        We keep inquiry, plan request, and account records for as long as needed to respond to you, provide services, and meet
-        legal obligations. [TO BE CONFIRMED: specific retention periods.]
+        Depending on your jurisdiction, you may be able to request access to non-personal telemetry associated with your
+        account (if applicable), request deletion of diagnostic data, or opt out of diagnostic collection through system
+        or in-app settings when available.
       </p>
+      <p>Submit privacy inquiries or requests via the contact information below.</p>
 
-      <h2>Your choices and rights</h2>
+      <h2>6. Changes to This Privacy Policy</h2>
       <p>
-        You may request access to, correction of, or deletion of your personal information, subject to applicable law.
-        Depending on where you live, you may have additional rights under state privacy laws. Submit requests through our{' '}
-        <Link to="/contact?category=general">contact form</Link>.
+        We may update this policy to reflect new legal requirements, product capabilities, or operational practices. The
+        most recent version will always be available on our website or within the app.
       </p>
+      <p>Continued use of the Service after updates signifies acceptance of the revised policy.</p>
 
-      <h2>Security</h2>
+      <h2>7. Contact Us</h2>
       <p>
-        We use measures such as password hashing, rate limiting, input validation, and encrypted connections. No method
-        of transmission or storage is completely secure.
+        Questions or requests? Email us at <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>. We aim to respond
+        as quickly as possible.
       </p>
-
-      <h2>Children</h2>
-      <p>This website is not directed to children under 13, and we do not knowingly collect their personal information.</p>
-
-      <h2>Changes</h2>
-      <p>We will post updates to this policy on this page and revise the effective date above.</p>
     </LegalDocument>
   );
 }

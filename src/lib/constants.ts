@@ -107,7 +107,7 @@ export const FOOTER_LINKS: { title: string; links: NavLink[] }[] = [
   {
     title: 'Legal',
     links: [
-      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Privacy Policy', href: '/vpn/privacy' },
       { label: 'Terms of Service', href: '/terms' },
       { label: 'Acceptable Use Policy', href: '/acceptable-use' },
     ],

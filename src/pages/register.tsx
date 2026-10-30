@@ -153,7 +153,7 @@ export function RegisterPage() {
                             Terms of Service
                           </Link>{' '}
                           and{' '}
-                          <Link to="/privacy" className="text-brand hover:underline">
+                          <Link to="/vpn/privacy" className="text-brand hover:underline">
                             Privacy Policy
                           </Link>
                           .
